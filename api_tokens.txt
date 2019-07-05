@@ -1,2 +1,4 @@
 [ThesisPrototype]
 V1mifvQ2s7BI4QTcTVfWSyQZeCYC3GSyXjwiEaLzKPmlTUV1gOa9IMotR7NH
+[TestThesisPrototype]
+GkWs4dgk0DLANOnHs4MkfjEPI2rhGRBcX4zXx6T0xVMiRzrEaMNCo6Ccx8jA

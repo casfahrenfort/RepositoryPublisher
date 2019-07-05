@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "dedeb6b456d77bff11329e5f8ee82ebdab193ace"
+    "signature": "8b6eaf8e885ad936bb601b7106631192577a20be"
   },
   "compilationOptions": {
     "defines": [
@@ -24,16 +24,92 @@
     ".NETCoreApp,Version=v2.2": {
       "ThesisPrototype/1.0.0": {
         "dependencies": {
+          "LibGit2Sharp": "0.26.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "12.0.2",
+          "SharpSvn.1.9-x64": "1.9007.3987.251",
+          "SharpZipLib": "1.1.0"
         },
         "runtime": {
           "ThesisPrototype.dll": {}
         },
         "compile": {
           "ThesisPrototype.dll": {}
+        }
+      },
+      "LibGit2Sharp/0.26.0": {
+        "dependencies": {
+          "LibGit2Sharp.NativeBinaries": "2.0.267"
+        },
+        "runtime": {
+          "lib/netstandard2.0/LibGit2Sharp.dll": {
+            "assemblyVersion": "0.26.0.0",
+            "fileVersion": "0.26.0.89"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/LibGit2Sharp.dll": {}
+        }
+      },
+      "LibGit2Sharp.NativeBinaries/2.0.267": {
+        "runtimeTargets": {
+          "runtimes/alpine-x64/native/libgit2-572e4d8.so": {
+            "rid": "alpine-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/debian.9-x64/native/libgit2-572e4d8.so": {
+            "rid": "debian.9-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/fedora-x64/native/libgit2-572e4d8.so": {
+            "rid": "fedora-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libgit2-572e4d8.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libgit2-572e4d8.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/rhel-x64/native/libgit2-572e4d8.so": {
+            "rid": "rhel-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/ubuntu.18.04-x64/native/libgit2-572e4d8.so": {
+            "rid": "ubuntu.18.04-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/git2-572e4d8.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.28.1.0"
+          },
+          "runtimes/win-x64/native/git2-572e4d8.pdb": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/git2-572e4d8.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.28.1.0"
+          },
+          "runtimes/win-x86/native/git2-572e4d8.pdb": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
         }
       },
       "Microsoft.NETCore.App/2.2.0": {
@@ -216,6 +292,33 @@
         },
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "SharpSvn.1.9-x64/1.9007.3987.251": {
+        "runtime": {
+          "lib/net40/SharpSvn.UI.dll": {
+            "assemblyVersion": "1.9007.3987.251",
+            "fileVersion": "1.9007.3987.251"
+          },
+          "lib/net40/SharpSvn.dll": {
+            "assemblyVersion": "1.9007.3987.251",
+            "fileVersion": "1.9007.3987.251"
+          }
+        },
+        "compile": {
+          "lib/net40/SharpSvn.UI.dll": {},
+          "lib/net40/SharpSvn.dll": {}
+        }
+      },
+      "SharpZipLib/1.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll": {
+            "assemblyVersion": "1.1.0.145",
+            "fileVersion": "1.1.0.145"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3233,6 +3336,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "LibGit2Sharp/0.26.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Yxw4An+JfU/folkiKKPEfvdUuWF5Sa2cccI5GfQJamcWPHr05MslMdx/Ryuu0F+VwsEuJoatnIvja+PmwYkK0w==",
+      "path": "libgit2sharp/0.26.0",
+      "hashPath": "libgit2sharp.0.26.0.nupkg.sha512"
+    },
+    "LibGit2Sharp.NativeBinaries/2.0.267": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8fwTV7Ka0zxS43OY+TGoBhC8TRcF0+dG+IDA/csE/4QYutnfW8LYIaN/OOdTPRD5/Xtk3su9pwt1BSSbi8s7kw==",
+      "path": "libgit2sharp.nativebinaries/2.0.267",
+      "hashPath": "libgit2sharp.nativebinaries.2.0.267.nupkg.sha512"
+    },
     "Microsoft.NETCore.App/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -3288,6 +3405,20 @@
       "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
       "path": "newtonsoft.json/12.0.2",
       "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "SharpSvn.1.9-x64/1.9007.3987.251": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dxHeCpj5QTzHlXi7dygPGCwNtWoBu7KHT7jzNvRyc1znPppurcxobbo3XvyutrovfhBJU+Zg75uuVtGVW5BB1A==",
+      "path": "sharpsvn.1.9-x64/1.9007.3987.251",
+      "hashPath": "sharpsvn.1.9-x64.1.9007.3987.251.nupkg.sha512"
+    },
+    "SharpZipLib/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6cwSz51tzupsfb8q5AVRDqvD4vSeDDJuv3CYWCvQ+T3wrAjQtniICiczb+++j93z3NNuCZN+TiRjZ5lnfWtleQ==",
+      "path": "sharpziplib/1.1.0",
+      "hashPath": "sharpziplib.1.1.0.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

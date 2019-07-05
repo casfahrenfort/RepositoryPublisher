@@ -2,6 +2,73 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "LibGit2Sharp/0.26.0": {
+        "type": "package",
+        "dependencies": {
+          "LibGit2Sharp.NativeBinaries": "[2.0.267]"
+        },
+        "compile": {
+          "lib/netstandard2.0/LibGit2Sharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/LibGit2Sharp.dll": {}
+        }
+      },
+      "LibGit2Sharp.NativeBinaries/2.0.267": {
+        "type": "package",
+        "build": {
+          "build/LibGit2Sharp.NativeBinaries.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/LibGit2Sharp.NativeBinaries.props": {}
+        },
+        "runtimeTargets": {
+          "runtimes/alpine-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "alpine-x64"
+          },
+          "runtimes/debian.9-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "debian.9-x64"
+          },
+          "runtimes/fedora-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "fedora-x64"
+          },
+          "runtimes/linux-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx/native/libgit2-572e4d8.dylib": {
+            "assetType": "native",
+            "rid": "osx"
+          },
+          "runtimes/rhel-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "rhel-x64"
+          },
+          "runtimes/ubuntu.18.04-x64/native/libgit2-572e4d8.so": {
+            "assetType": "native",
+            "rid": "ubuntu.18.04-x64"
+          },
+          "runtimes/win-x64/native/git2-572e4d8.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x64/native/git2-572e4d8.pdb": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/git2-572e4d8.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win-x86/native/git2-572e4d8.pdb": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -2974,6 +3041,26 @@
           }
         }
       },
+      "SharpSvn.1.9-x64/1.9007.3987.251": {
+        "type": "package",
+        "compile": {
+          "lib/net40/SharpSvn.UI.dll": {},
+          "lib/net40/SharpSvn.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SharpSvn.UI.dll": {},
+          "lib/net40/SharpSvn.dll": {}
+        }
+      },
+      "SharpZipLib/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4442,6 +4529,55 @@
     }
   },
   "libraries": {
+    "LibGit2Sharp/0.26.0": {
+      "sha512": "Yxw4An+JfU/folkiKKPEfvdUuWF5Sa2cccI5GfQJamcWPHr05MslMdx/Ryuu0F+VwsEuJoatnIvja+PmwYkK0w==",
+      "type": "package",
+      "path": "libgit2sharp/0.26.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "App_Readme/CHANGES.md",
+        "App_Readme/LICENSE.md",
+        "App_Readme/README.md",
+        "lib/net46/LibGit2Sharp.dll",
+        "lib/net46/LibGit2Sharp.pdb",
+        "lib/net46/LibGit2Sharp.xml",
+        "lib/netstandard2.0/LibGit2Sharp.dll",
+        "lib/netstandard2.0/LibGit2Sharp.pdb",
+        "lib/netstandard2.0/LibGit2Sharp.xml",
+        "libgit2sharp.0.26.0.nupkg.sha512",
+        "libgit2sharp.nuspec"
+      ]
+    },
+    "LibGit2Sharp.NativeBinaries/2.0.267": {
+      "sha512": "8fwTV7Ka0zxS43OY+TGoBhC8TRcF0+dG+IDA/csE/4QYutnfW8LYIaN/OOdTPRD5/Xtk3su9pwt1BSSbi8s7kw==",
+      "type": "package",
+      "path": "libgit2sharp.nativebinaries/2.0.267",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/LibGit2Sharp.NativeBinaries.props",
+        "build/net46/LibGit2Sharp.NativeBinaries.props",
+        "buildMultiTargeting/LibGit2Sharp.NativeBinaries.props",
+        "buildMultiTargeting/net46/LibGit2Sharp.NativeBinaries.props",
+        "libgit2/LibGit2Sharp.dll.config",
+        "libgit2/libgit2.license.txt",
+        "libgit2/libgit2_hash.txt",
+        "libgit2sharp.nativebinaries.2.0.267.nupkg.sha512",
+        "libgit2sharp.nativebinaries.nuspec",
+        "runtimes/alpine-x64/native/libgit2-572e4d8.so",
+        "runtimes/debian.9-x64/native/libgit2-572e4d8.so",
+        "runtimes/fedora-x64/native/libgit2-572e4d8.so",
+        "runtimes/linux-x64/native/libgit2-572e4d8.so",
+        "runtimes/osx/native/libgit2-572e4d8.dylib",
+        "runtimes/rhel-x64/native/libgit2-572e4d8.so",
+        "runtimes/ubuntu.18.04-x64/native/libgit2-572e4d8.so",
+        "runtimes/win-x64/native/git2-572e4d8.dll",
+        "runtimes/win-x64/native/git2-572e4d8.pdb",
+        "runtimes/win-x86/native/git2-572e4d8.dll",
+        "runtimes/win-x86/native/git2-572e4d8.pdb"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "91JMnE9zdIDphG00qgRvl8ZwKEjqAbNlJdfXUoMiIWPfpYyH7fyCsTSj6/aynRdw/Qr/K70xC7QC6MOJ1vFBJQ==",
       "type": "package",
@@ -7667,6 +7803,52 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "SharpSvn.1.9-x64/1.9007.3987.251": {
+      "sha512": "dxHeCpj5QTzHlXi7dygPGCwNtWoBu7KHT7jzNvRyc1znPppurcxobbo3XvyutrovfhBJU+Zg75uuVtGVW5BB1A==",
+      "type": "package",
+      "path": "sharpsvn.1.9-x64/1.9007.3987.251",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/SharpPlink-x64.pdb",
+        "lib/net20/SharpPlink-x64.svnExe",
+        "lib/net20/SharpSvn-DB44-20-x64.svnDll",
+        "lib/net20/SharpSvn.UI.dll",
+        "lib/net20/SharpSvn.UI.pdb",
+        "lib/net20/SharpSvn.UI.xml",
+        "lib/net20/SharpSvn.dll",
+        "lib/net20/SharpSvn.pdb",
+        "lib/net20/SharpSvn.xml",
+        "lib/net40/SharpPlink-x64.pdb",
+        "lib/net40/SharpPlink-x64.svnExe",
+        "lib/net40/SharpSvn-DB44-20-x64.svnDll",
+        "lib/net40/SharpSvn.UI.dll",
+        "lib/net40/SharpSvn.UI.pdb",
+        "lib/net40/SharpSvn.UI.xml",
+        "lib/net40/SharpSvn.dll",
+        "lib/net40/SharpSvn.pdb",
+        "lib/net40/SharpSvn.xml",
+        "sharpsvn.1.9-x64.1.9007.3987.251.nupkg.sha512",
+        "sharpsvn.1.9-x64.nuspec"
+      ]
+    },
+    "SharpZipLib/1.1.0": {
+      "sha512": "6cwSz51tzupsfb8q5AVRDqvD4vSeDDJuv3CYWCvQ+T3wrAjQtniICiczb+++j93z3NNuCZN+TiRjZ5lnfWtleQ==",
+      "type": "package",
+      "path": "sharpziplib/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/ICSharpCode.SharpZipLib.dll",
+        "lib/net45/ICSharpCode.SharpZipLib.pdb",
+        "lib/net45/ICSharpCode.SharpZipLib.xml",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.pdb",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.xml",
+        "sharpziplib.1.1.0.nupkg.sha512",
+        "sharpziplib.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -12066,10 +12248,13 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "LibGit2Sharp >= 0.26.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Newtonsoft.Json >= 12.0.2"
+      "Newtonsoft.Json >= 12.0.2",
+      "SharpSvn.1.9-x64 >= 1.9007.3987.251",
+      "SharpZipLib >= 1.1.0"
     ]
   },
   "packageFolders": {
@@ -12079,11 +12264,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\casfa\\source\\repos\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype.csproj",
+      "projectUniqueName": "C:\\Users\\casfa\\Documents\\Thesis\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype.csproj",
       "projectName": "ThesisPrototype",
-      "projectPath": "C:\\Users\\casfa\\source\\repos\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype.csproj",
+      "projectPath": "C:\\Users\\casfa\\Documents\\Thesis\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype.csproj",
       "packagesPath": "C:\\Users\\casfa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\casfa\\source\\repos\\ThesisPrototype\\ThesisPrototype\\obj\\",
+      "outputPath": "C:\\Users\\casfa\\Documents\\Thesis\\ThesisPrototype\\ThesisPrototype\\ThesisPrototype\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12113,6 +12298,10 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "LibGit2Sharp": {
+            "target": "Package",
+            "version": "[0.26.0, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -12133,6 +12322,14 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[12.0.2, )"
+          },
+          "SharpSvn.1.9-x64": {
+            "target": "Package",
+            "version": "[1.9007.3987.251, )"
+          },
+          "SharpZipLib": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           }
         },
         "imports": [
@@ -12142,5 +12339,17 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'SharpSvn.1.9-x64 1.9007.3987.251' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "SharpSvn.1.9-x64",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    }
+  ]
 }

@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using ThesisPrototype.Models;
 using ThesisPrototype.Services.Interfaces;
 
 namespace ThesisPrototype.Services.Implementations
@@ -14,12 +11,22 @@ namespace ThesisPrototype.Services.Implementations
     {
         private static HttpClient client = new HttpClient();
 
-        public async Task<HttpResponseMessage> PublishObject(TestModel model)
+        private readonly IConfiguration configuration;
+
+        public PublishingService(IConfiguration configuration)
         {
-            var json = JsonConvert.SerializeObject(model);
-            HttpResponseMessage response = await client.PostAsync(
-                "https://b2share.eudat.eu/api/records/?access_token=V1mifvQ2s7BI4QTcTVfWSyQZeCYC3GSyXjwiEaLzKPmlTUV1gOa9IMotR7NH",
-                new StringContent(json, Encoding.UTF32, "application/json")
+            this.configuration = configuration;
+        }
+
+        public async Task<HttpResponseMessage> PublishDraftRecord(string recordId)
+        {
+            string patchMessage = "[{\"op\": \"add\", \"path\":\"/community_specific\", \"value\": {}},{\"op\": \"add\", \"path\":\"/publication_state\", \"value\": \"submitted\"}]";
+            StringContent content = new StringContent(patchMessage, Encoding.UTF8, "application/json-patch+json");
+            content.Headers.ContentType.CharSet = "";
+
+            HttpResponseMessage response = await client.PatchAsync(
+                "https://trng-b2share.eudat.eu/api/records/" + recordId + "/draft?access_token=" + configuration["B2SHAREtrngAccessToken"],
+                content
             );
 
             return response;

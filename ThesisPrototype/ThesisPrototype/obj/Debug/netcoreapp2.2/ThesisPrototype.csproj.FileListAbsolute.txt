@@ -12,3 +12,17 @@ C:\Users\casfa\source\repos\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp
 C:\Users\casfa\source\repos\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.RazorTargetAssemblyInfo.cache
 C:\Users\casfa\source\repos\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.dll
 C:\Users\casfa\source\repos\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.pdb
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\bin\Debug\netcoreapp2.2\ThesisPrototype.deps.json
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\bin\Debug\netcoreapp2.2\ThesisPrototype.runtimeconfig.json
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\bin\Debug\netcoreapp2.2\ThesisPrototype.runtimeconfig.dev.json
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\bin\Debug\netcoreapp2.2\ThesisPrototype.dll
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\bin\Debug\netcoreapp2.2\ThesisPrototype.pdb
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.csprojAssemblyReference.cache
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.csproj.CoreCompileInputs.cache
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.RazorAssemblyInfo.cache
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.RazorAssemblyInfo.cs
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.AssemblyInfoInputs.cache
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.AssemblyInfo.cs
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.RazorTargetAssemblyInfo.cache
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.dll
+C:\Users\casfa\Documents\Thesis\ThesisPrototype\ThesisPrototype\ThesisPrototype\obj\Debug\netcoreapp2.2\ThesisPrototype.pdb
