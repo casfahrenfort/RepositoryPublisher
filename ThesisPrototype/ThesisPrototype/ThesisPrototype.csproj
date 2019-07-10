@@ -10,7 +10,6 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="SharpSvn.1.9-x64" Version="1.9007.3987.251" />
     <PackageReference Include="SharpZipLib" Version="1.1.0" />
   </ItemGroup>
 

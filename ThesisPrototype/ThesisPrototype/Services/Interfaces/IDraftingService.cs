@@ -11,6 +11,8 @@ namespace ThesisPrototype.Services.Interfaces
 
         Task<HttpResponseMessage> DeleteDraftRecord(string recordId);
 
-        Task<HttpResponseMessage> UploadStreamToDraftRecord(Stream stream, string fileName, string fileBucketId);
+        Task<HttpResponseMessage> UploadStreamToDraftRecord(byte[] file, string fileName, string fileBucketId);
+
+        Task<HttpResponseMessage> ListAllRecords();
     }
 }

@@ -3041,17 +3041,6 @@
           }
         }
       },
-      "SharpSvn.1.9-x64/1.9007.3987.251": {
-        "type": "package",
-        "compile": {
-          "lib/net40/SharpSvn.UI.dll": {},
-          "lib/net40/SharpSvn.dll": {}
-        },
-        "runtime": {
-          "lib/net40/SharpSvn.UI.dll": {},
-          "lib/net40/SharpSvn.dll": {}
-        }
-      },
       "SharpZipLib/1.1.0": {
         "type": "package",
         "compile": {
@@ -7805,35 +7794,6 @@
         "version.txt"
       ]
     },
-    "SharpSvn.1.9-x64/1.9007.3987.251": {
-      "sha512": "dxHeCpj5QTzHlXi7dygPGCwNtWoBu7KHT7jzNvRyc1znPppurcxobbo3XvyutrovfhBJU+Zg75uuVtGVW5BB1A==",
-      "type": "package",
-      "path": "sharpsvn.1.9-x64/1.9007.3987.251",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net20/SharpPlink-x64.pdb",
-        "lib/net20/SharpPlink-x64.svnExe",
-        "lib/net20/SharpSvn-DB44-20-x64.svnDll",
-        "lib/net20/SharpSvn.UI.dll",
-        "lib/net20/SharpSvn.UI.pdb",
-        "lib/net20/SharpSvn.UI.xml",
-        "lib/net20/SharpSvn.dll",
-        "lib/net20/SharpSvn.pdb",
-        "lib/net20/SharpSvn.xml",
-        "lib/net40/SharpPlink-x64.pdb",
-        "lib/net40/SharpPlink-x64.svnExe",
-        "lib/net40/SharpSvn-DB44-20-x64.svnDll",
-        "lib/net40/SharpSvn.UI.dll",
-        "lib/net40/SharpSvn.UI.pdb",
-        "lib/net40/SharpSvn.UI.xml",
-        "lib/net40/SharpSvn.dll",
-        "lib/net40/SharpSvn.pdb",
-        "lib/net40/SharpSvn.xml",
-        "sharpsvn.1.9-x64.1.9007.3987.251.nupkg.sha512",
-        "sharpsvn.1.9-x64.nuspec"
-      ]
-    },
     "SharpZipLib/1.1.0": {
       "sha512": "6cwSz51tzupsfb8q5AVRDqvD4vSeDDJuv3CYWCvQ+T3wrAjQtniICiczb+++j93z3NNuCZN+TiRjZ5lnfWtleQ==",
       "type": "package",
@@ -12253,7 +12213,6 @@
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Newtonsoft.Json >= 12.0.2",
-      "SharpSvn.1.9-x64 >= 1.9007.3987.251",
       "SharpZipLib >= 1.1.0"
     ]
   },
@@ -12323,10 +12282,6 @@
             "target": "Package",
             "version": "[12.0.2, )"
           },
-          "SharpSvn.1.9-x64": {
-            "target": "Package",
-            "version": "[1.9007.3987.251, )"
-          },
           "SharpZipLib": {
             "target": "Package",
             "version": "[1.1.0, )"
@@ -12339,17 +12294,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SharpSvn.1.9-x64 1.9007.3987.251' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
-      "libraryId": "SharpSvn.1.9-x64",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.2"
-      ]
-    }
-  ]
+  }
 }

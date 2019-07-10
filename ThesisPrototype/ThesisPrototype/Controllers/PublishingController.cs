@@ -16,17 +16,17 @@ namespace ThesisPrototype.Controllers
     {
         private readonly IPublishingService publishingService;
         private readonly IDraftingService draftingService;
-        private readonly IGitHubStreamService gitHubStreamService;
+        private readonly IGitHubService gitHubService;
         private readonly ISubversionStreamService subversionStreamService;
 
         public PublishingController(IPublishingService publishingService,
             IDraftingService draftingService,
-            IGitHubStreamService gitHubStreamService,
+            IGitHubService gitHubService,
             ISubversionStreamService subversionStreamService)
         {
             this.publishingService = publishingService;
             this.draftingService = draftingService;
-            this.gitHubStreamService = gitHubStreamService;
+            this.gitHubService = gitHubService;
             this.subversionStreamService = subversionStreamService;
         }
         
@@ -48,17 +48,22 @@ namespace ThesisPrototype.Controllers
             string fileBucketId = jsonResponse.links.files;
             fileBucketId = fileBucketId.Split('/').Last();
 
-            Stream gitHubStream = gitHubStreamService.GitFolderStream("https://github.com/casfahrenfort/gwtemplatecoder");
-
-            response = await draftingService.UploadStreamToDraftRecord(gitHubStream, ".git.tar.gz", fileBucketId);
-            
-            if (!response.IsSuccessStatusCode)
+            List<DraftFile> draftFiles = gitHubService.GitFolderAndCommitStreams("https://github.com/" + author + "/" + repo);
+            foreach(DraftFile draftFile in draftFiles)
             {
-                // Delete draft to ensure transactional nature of request
-                await draftingService.DeleteDraftRecord(recordId);
-                return response.StatusCode.ToString();
-            }
+                response = await draftingService.UploadStreamToDraftRecord(draftFile.bytes, draftFile.name, fileBucketId);
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Delete draft to ensure transactional nature of request
+                    await draftingService.DeleteDraftRecord(recordId);
+
+                    jsonString = await response.Content.ReadAsStringAsync();
+                    jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
+                    return response.StatusCode.ToString();
+                }
+            }
+            
             response = await publishingService.PublishDraftRecord(recordId);
             
             if (!response.IsSuccessStatusCode)
@@ -85,6 +90,23 @@ namespace ThesisPrototype.Controllers
         public async Task<ActionResult<string>> Binary()
         {
             var x = Request.Form.Files;
+
+            return "";
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<string>> Delete()
+        {
+            HttpResponseMessage response = await draftingService.ListAllRecords();
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
+
+            // Delete every existing draft record
+            foreach(dynamic hit in jsonResponse.hits.hits)
+            {
+                response = await draftingService.DeleteDraftRecord((string)hit.id);
+            }
 
             return "";
         }

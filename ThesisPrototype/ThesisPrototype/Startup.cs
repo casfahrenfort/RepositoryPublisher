@@ -23,10 +23,11 @@ namespace ThesisPrototype
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddTransient(typeof (IDraftingService), typeof(DraftingService));
-            services.AddTransient(typeof (ICompressionService), typeof(CompressionService));
             services.AddTransient(typeof (IPublishingService), typeof(PublishingService));
 
-            services.AddTransient(typeof (IGitHubStreamService), typeof(GitHubStreamService));
+            services.AddTransient(typeof(ICompressionService), typeof(CompressionService));
+
+            services.AddTransient(typeof (IGitHubService), typeof(GitHubService));
             services.AddTransient(typeof (ISubversionStreamService), typeof(SubversionStreamService));
         }
 

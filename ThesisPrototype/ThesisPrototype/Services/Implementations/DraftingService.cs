@@ -15,13 +15,10 @@ namespace ThesisPrototype.Services.Implementations
     {
         private static HttpClient client = new HttpClient();
 
-        private readonly ICompressionService compressionService;
         private readonly IConfiguration configuration;
 
-        public DraftingService(IConfiguration configuration,
-            ICompressionService compressionService)
+        public DraftingService(IConfiguration configuration)
         {
-            this.compressionService = compressionService;
             this.configuration = configuration;
         }
 
@@ -45,23 +42,33 @@ namespace ThesisPrototype.Services.Implementations
         public async Task<HttpResponseMessage> DeleteDraftRecord(string recordId)
         {
             HttpResponseMessage response = await client.DeleteAsync(
-                "https://trng-b2share.eudat.eu/api/records/" + recordId + "/draft?" + configuration["B2SHAREtrngAccessToken"]
+                "https://trng-b2share.eudat.eu/api/records/" + recordId + "/draft?access_token=" + configuration["B2SHAREtrngAccessToken"]
             );
 
             return response;
         }
 
-        public async Task<HttpResponseMessage> UploadStreamToDraftRecord(Stream stream, string fileName, string fileBucketId)
+        public async Task<HttpResponseMessage> UploadStreamToDraftRecord(byte[] file, string fileName, string fileBucketId)
         {
-            StreamContent streamContent = new StreamContent(stream);
+            ByteArrayContent content = new ByteArrayContent(file);
+            //StreamContent streamContent = new StreamContent(stream);
             //streamContent.Headers.Add("Content-Encoding", "gzip");
-            streamContent.Headers.ContentLength = stream.Length;
+            //streamContent.Headers.ContentLength = stream.Length;
 
             HttpResponseMessage response = await client.PutAsync(
                 "https://trng-b2share.eudat.eu/api/files/" + fileBucketId + "/" + fileName + "?access_token=" + configuration["B2SHAREtrngAccessToken"],
-                streamContent);
+                content);
 
             return response;
         }
+
+        public async Task<HttpResponseMessage> ListAllRecords()
+        {
+            HttpResponseMessage response = await client.GetAsync(
+                "https://trng-b2share.eudat.eu/api/records/?drafts=1&size=50&access_token=" + configuration["B2SHAREtrngAccessToken"]);
+
+            return response;
+        }
+
     }
 }
