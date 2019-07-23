@@ -11,7 +11,7 @@ namespace ThesisPrototype.Services.Implementations
             string zipPath = "../Zips/" + archiveName + ".zip";
 
             ZipFile.CreateFromDirectory(sourceDirectory, zipPath);
-
+            
             byte[] bytes = File.ReadAllBytes(zipPath);
 
             File.Delete(zipPath);

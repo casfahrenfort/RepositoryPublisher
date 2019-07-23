@@ -7,6 +7,6 @@ namespace ThesisPrototype.Services.Interfaces
 {
     public interface IVcsService
     {
-        byte[] GetRepositorySnapshot(string url, string repoName);
+        Snapshot GetRepositorySnapshot(string url, string repoName);
     }
 }

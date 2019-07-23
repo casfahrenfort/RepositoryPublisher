@@ -1,6 +1,10 @@
 ﻿using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using ThesisPrototype.Helpers;
 using ThesisPrototype.Models;
 using ThesisPrototype.Services.Interfaces;
@@ -16,15 +20,23 @@ namespace ThesisPrototype.Services.Implementations
             this.compressionService = compressionService;
         }
 
-        public byte[] GetRepositorySnapshot(string gitHubUrl, string repoName)
+        public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName)
         {
             string repoPath = CloneGitRepo(gitHubUrl, repoName);
+
+            DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
+
+            string md5 = CreateGitChecksum(repoPath);
 
             byte[] repoBytes = compressionService.ZipBytes(repoPath, repoName);
 
             DeleteGitRepo(repoPath);
 
-            return repoBytes;
+            return new Snapshot()
+            {
+                checksum = md5,
+                zippedBytes = repoBytes
+            };
         }
 
         private List<DraftFile> GitFolderAndCommitStreams(string gitHubUrl)
@@ -94,8 +106,29 @@ namespace ThesisPrototype.Services.Implementations
 
         private void DeleteGitRepo(string repoPath)
         {
-            DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
             Directory.Delete(repoPath, true);
+        }
+
+        private string CreateGitChecksum(string repoPath)
+        {
+            string shas = "";
+
+            Repository repo = new Repository(repoPath);
+            foreach (Commit commit in repo.Commits)
+            {
+                shas += commit.Sha;
+            }
+
+            repo.Dispose();
+
+            MD5 mD5 = MD5.Create();
+            byte[] mD5bytes = mD5.ComputeHash(Encoding.ASCII.GetBytes(shas));
+
+            string result = BitConverter.ToString(mD5bytes).Replace("-", string.Empty);
+
+            mD5.Dispose();
+
+            return result;
         }
 
         private void WriteTreeEntry(TreeEntry treeEntry, string commitPath)

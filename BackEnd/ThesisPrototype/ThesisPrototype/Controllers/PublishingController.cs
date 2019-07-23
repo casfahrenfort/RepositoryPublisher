@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ThesisPrototype.Converters;
@@ -15,14 +16,17 @@ namespace ThesisPrototype.Controllers
         private readonly IB2ShareService b2ShareService;
         private readonly IGitHubService gitHubService;
         private readonly ISubversionService subversionService;
+        private readonly IPublicationService publicationService;
 
         public PublishingController(IB2ShareService b2ShareService,
             IGitHubService gitHubService,
-            ISubversionService subversionService)
+            ISubversionService subversionService,
+            IPublicationService publicationService)
         {
             this.b2ShareService = b2ShareService;
             this.gitHubService = gitHubService;
             this.subversionService = subversionService;
+            this.publicationService = publicationService;
         }
 
         [HttpPost]
@@ -36,22 +40,31 @@ namespace ThesisPrototype.Controllers
                 default: vcsService = gitHubService; break;
             }
 
-            byte[] repoBytes;
+            Snapshot snapshot;
             try
             {
-                repoBytes = vcsService.GetRepositorySnapshot(publishInfo.repoURL, publishInfo.repoName);
+                snapshot = vcsService.GetRepositorySnapshot(publishInfo.repoURL, publishInfo.repoName);
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest(new CloneErrorResponse()
+                return BadRequest(new ErrorResponse()
                 {
                     message = $"An error occurred while cloning the repository at {publishInfo.repoURL}. Please make sure the repository is publicly accessible."
                 });
             }
 
+            Publication duplicate = publicationService.FindDuplicatePublication(snapshot.checksum);
+            if (duplicate != null)
+            {
+                return BadRequest(new ErrorResponse()
+                {
+                    message = $"This repository has already been published at {duplicate.PublicationUrl}"
+                });
+            }
+
             IPublishingService publishingService = b2ShareService;
 
-            HttpResponseMessage response = await publishingService.PublishRepository(repoBytes, publishInfo.repoName, publishInfo.metaData);
+            HttpResponseMessage response = await publishingService.PublishRepository(snapshot.zippedBytes, publishInfo.repoName, publishInfo.metaData);
 
             string jsonString = await response.Content.ReadAsStringAsync();
             dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
@@ -68,6 +81,8 @@ namespace ThesisPrototype.Controllers
                     }
                 });
             }
+
+            publicationService.CreatePublication(publishInfo.repoURL, (string)jsonResponse.links.publication, publishInfo.metaData.open_access, snapshot.checksum);
 
             return Ok(new PublishResponse()
             {

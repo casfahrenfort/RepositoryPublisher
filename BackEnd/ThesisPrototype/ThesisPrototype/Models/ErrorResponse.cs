@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ThesisPrototype.Models
 {
-    public class CloneErrorResponse
+    public class ErrorResponse
     {
         public string message;
     }
