@@ -17,4 +17,11 @@ export class PublicationService {
             .catch(result => <PublishResult>result);
     }
 
+    public publishMultipleRepositories(publications: Publication[]) : Promise<PublishResult> {
+        return this.httpClient.post(environment.apiUrl + 'publishing/multiple', publications)
+            .toPromise()
+            .then(result => <PublishResult>result)
+            .catch(result => <PublishResult>result);
+    }
+
 }

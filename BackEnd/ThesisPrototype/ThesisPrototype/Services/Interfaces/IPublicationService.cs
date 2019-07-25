@@ -10,6 +10,10 @@ namespace ThesisPrototype.Services.Interfaces
     {
         Publication FindDuplicatePublication(string checksum);
 
-        void CreatePublication(string sourceUrl, string publicationUrl, bool open_access, string checksum);
+        PublicationBundle FindDuplicatePublicationBundle(List<Publication> publications);
+
+        PublicationBundle CreatePublicationBundle(string[] publicationUrls, string[] publicationIds, string publicationUrl, bool open_access);
+
+        Publication CreatePublication(string sourceUrl, string publicationUrl, bool open_access, string checksum);
     }
 }

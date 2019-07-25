@@ -6,9 +6,9 @@ namespace ThesisPrototype.Services.Implementations
 {
     public class CompressionService : ICompressionService
     {
-        public byte[] ZipBytes(string sourceDirectory, string archiveName)
+        public byte[] ZipBytes(string sourceDirectory, string archiveName, string destPath)
         {
-            string zipPath = "../Zips/" + archiveName + ".zip";
+            string zipPath = $"{destPath}/{archiveName}.zip";
 
             ZipFile.CreateFromDirectory(sourceDirectory, zipPath);
             

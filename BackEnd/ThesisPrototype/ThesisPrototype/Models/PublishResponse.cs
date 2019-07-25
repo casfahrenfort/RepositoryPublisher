@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace ThesisPrototype.Models
 {
-    public class PublishResponse
+    public class PublishResponse : Response
     {
         public string message;
         public string publishUrl;
     }
 
-    public class PublishErrorResponse
+    public class PublishErrorResponse : Response
     {
         public string message;
         public B2ShareResponse b2ShareResponse;

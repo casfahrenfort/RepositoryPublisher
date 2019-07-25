@@ -1,13 +1,14 @@
-﻿using LibGit2Sharp;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ThesisPrototype.Converters;
 using ThesisPrototype.Models;
+using ThesisPrototype.Models.B2Share;
 using ThesisPrototype.Services.Interfaces;
 
 namespace ThesisPrototype.Services.Implementations
@@ -23,51 +24,122 @@ namespace ThesisPrototype.Services.Implementations
             this.configuration = configuration;
         }
 
-        public async Task<HttpResponseMessage> PublishRepository(byte[] repoBytes, string repoName, MetaData metaData)
+        public async Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, PublishInfo bundlePublishInfo)
+        {
+            List<B2SharePublication> publications = new List<B2SharePublication>();
+            List<Response> responses = new List<Response>();
+
+            for (int i = 0; i < publishInfos.Count; i++)
+            {
+                B2ShareMetaData b2ShareMetaData = publishInfos[i].metaData.ToB2ShareMetaData();
+                HttpResponseMessage response = await CreateDraftRecord(b2ShareMetaData);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await response.ToB2ShareResponse();
+                }
+
+                B2ShareDraftResponse draftResponse = await response.ToB2ShareDraftResponse();
+
+                response = await UploadBytesToDraftRecord(publishInfos[i].snapshot.zippedBytes, $"{publishInfos[i].repoName}.zip", draftResponse.fileBucketId);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    for (int j = 0; j < i; i++)
+                    {
+                        // Delete all drafts to ensure transactional nature of request
+                        await DeleteDraftRecord(publications[j].recordId);
+                    }
+                    return await response.ToB2ShareResponse();
+                }
+
+                publications.Add(new B2SharePublication()
+                {
+                    recordId = draftResponse.recordId,
+                    publishInfo = publishInfos[i]
+                });
+            }
+
+            for (int i = 0; i < publications.Count; i++)
+            {
+                HttpResponseMessage response = await PublishDraftRecord(publications[i].recordId);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    for (int j = 0; j < i; i++)
+                    {
+                        // Delete all drafts to ensure transactional nature of request
+                        await DeleteDraftRecord(publications[i].recordId);
+                    }
+                    return await response.ToB2ShareResponse();
+                }
+                else
+                {
+                    B2SharePublishResponse publicationResponse = await response.ToB2SharePublishResponse();
+                    publications[i].publicationUrl = publicationResponse.publicationUrl;
+                }
+            }
+
+            B2ShareMetaData bundleB2ShareMetaData = bundlePublishInfo.metaData.ToB2ShareMetaData();
+            bundleB2ShareMetaData.resource_types = publications.Select(p => new B2ShareResourceType() { resource_type = p.publicationUrl, resource_type_general = "Software" }).ToArray();
+            HttpResponseMessage bundleResponse = await CreateDraftRecord(bundleB2ShareMetaData);
+
+            if (!bundleResponse.IsSuccessStatusCode)
+            {
+                return await bundleResponse.ToB2ShareResponse();
+            }
+
+            B2ShareDraftResponse bundleDraftResponse = await bundleResponse.ToB2ShareDraftResponse();
+
+            bundleResponse = await PublishDraftRecord(bundleDraftResponse.recordId);
+
+            if (!bundleResponse.IsSuccessStatusCode)
+            {
+                // Delete all drafts to ensure transactional nature of request
+                await DeleteDraftRecord(bundleDraftResponse.recordId);
+                return await bundleResponse.ToB2ShareResponse();
+            }
+
+            return await bundleResponse.ToB2ShareMultiplePublishResponse(publications);
+        }
+
+        public async Task<Response> PublishRepository(byte[] repoBytes, string repoName, MetaData metaData)
         {
             B2ShareMetaData b2ShareMetaData = metaData.ToB2ShareMetaData();
             HttpResponseMessage response = await CreateDraftRecord(b2ShareMetaData);
 
             if (!response.IsSuccessStatusCode)
             {
-                return response;
+                return await response.ToB2ShareResponse();
             }
 
-            string jsonString = await response.Content.ReadAsStringAsync();
-            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
+            B2ShareDraftResponse draftResponse = await response.ToB2ShareDraftResponse();
 
-            string recordId = jsonResponse.id;
-            string fileBucketId = jsonResponse.links.files;
-            fileBucketId = fileBucketId.Split('/').Last();
-
-            response = await UploadBytesToDraftRecord(repoBytes, $"{repoName}.zip", fileBucketId);
+            response = await UploadBytesToDraftRecord(repoBytes, $"{repoName}.zip", draftResponse.fileBucketId);
 
             if (!response.IsSuccessStatusCode)
             {
                 // Delete draft to ensure transactional nature of request
-                await DeleteDraftRecord(recordId);
-
-                jsonString = await response.Content.ReadAsStringAsync();
-                jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
-                return response;
+                await DeleteDraftRecord(draftResponse.recordId);
+                return await response.ToB2ShareResponse();
             }
 
-            response = await PublishDraftRecord(recordId);
+            response = await PublishDraftRecord(draftResponse.recordId);
 
             if (!response.IsSuccessStatusCode)
             {
                 // Delete draft to ensure transactional nature of request
-                await DeleteDraftRecord(recordId);
-                return response;
+                await DeleteDraftRecord(draftResponse.recordId);
+                return await response.ToB2ShareResponse();
             }
 
-            return response;
+            return await response.ToB2SharePublishResponse();
         }
 
         private async Task<HttpResponseMessage> CreateDraftRecord(B2ShareMetaData metaData)
         {
             metaData.community = "e9b9792e-79fb-4b07-b6b4-b9c2bd06d095";
-            string json = JsonConvert.SerializeObject(metaData, 
+            string json = JsonConvert.SerializeObject(metaData,
                 Formatting.None,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 

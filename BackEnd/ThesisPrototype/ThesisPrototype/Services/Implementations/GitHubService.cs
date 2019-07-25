@@ -20,93 +20,53 @@ namespace ThesisPrototype.Services.Implementations
             this.compressionService = compressionService;
         }
 
-        public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName)
+        public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName, string requestId)
         {
-            string repoPath = CloneGitRepo(gitHubUrl, repoName);
+            Directory.CreateDirectory($"../Repos/{requestId}");
+            string repoPath = $"../Repos/{requestId}/{repoName}";
 
-            DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
-
-            string md5 = CreateGitChecksum(repoPath);
-
-            byte[] repoBytes = compressionService.ZipBytes(repoPath, repoName);
-
-            DeleteGitRepo(repoPath);
-
-            return new Snapshot()
+            try
             {
-                checksum = md5,
-                zippedBytes = repoBytes
-            };
-        }
+                CloneGitRepo(gitHubUrl, repoPath);
 
-        private List<DraftFile> GitFolderAndCommitStreams(string gitHubUrl)
-        {
-            string repoPath = CloneGitRepo(gitHubUrl, "");
+                DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
 
-            List<DraftFile> result = new List<DraftFile>();
+                string md5 = CreateGitChecksum(repoPath);
 
-            result.Add(GitFolderDraftFile(repoPath));
+                byte[] repoBytes = compressionService.ZipBytes(repoPath, repoName, $"../Repos/{requestId}");
 
-            Repository repo = new Repository(repoPath);
-            foreach (Commit commit in repo.Commits)
-            {
-                result.Add(GitCommitDraftFile(commit));
+                DeleteRequestDirectory(requestId);
+
+                return new Snapshot()
+                {
+                    checksum = md5,
+                    zippedBytes = repoBytes
+                };
             }
-
-            repo.Dispose();
-
-            DeleteGitRepo(repoPath);
-
-            return result;
-        }
-
-        private DraftFile GitFolderDraftFile(string repoPath)
-        {
-            byte[] gitBites = compressionService.ZipBytes(repoPath + "/.git", ".git");
-
-            return new DraftFile()
+            catch(Exception e)
             {
-                name = ".git.zip",
-                bytes = gitBites
-            };
-        }
+                DeleteRequestDirectory(requestId);
 
-        private DraftFile GitCommitDraftFile(Commit commit)
-        {
-            string commitPath = "../" + commit.Sha.Substring(0, 8) + " " + commit.MessageShort;
-            DirectoryInfo commitDirectory = Directory.CreateDirectory(commitPath);
-
-            foreach (TreeEntry treeEntry in commit.Tree)
-            {
-                WriteTreeEntry(treeEntry, commitPath);
+                throw e;
             }
-
-            byte[] commitBytes = compressionService.ZipBytes(commitPath, commit.Sha.Substring(0, 8) + " " + commit.MessageShort);
-            Directory.Delete(commitPath, true);
-
-            return new DraftFile()
-            {
-                name = commit.Sha.Substring(0, 8) + " " + commit.MessageShort + ".zip",
-                bytes = commitBytes
-            };
-
         }
 
-        private string CloneGitRepo(string gitHubUrl, string repoName)
+        private void CloneGitRepo(string gitHubUrl, string repoPath)
         {
-            string repoPath = "../Repos/" + repoName;
-
             if (!Directory.Exists(repoPath))
             {
                 Repository.Clone(gitHubUrl, repoPath);
             }
-
-            return repoPath;
         }
 
-        private void DeleteGitRepo(string repoPath)
+        public void DeleteRequestDirectory(string requestId)
         {
-            Directory.Delete(repoPath, true);
+            string path = $"../Repos/{requestId}";
+            DirectoryHelper.SetAttributesNormal(new DirectoryInfo(path));
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
         }
 
         private string CreateGitChecksum(string repoPath)

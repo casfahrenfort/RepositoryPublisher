@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace ThesisPrototype.Models
 {
-    public class B2ShareResponse
+    public class Response
     {
-        public string status;
-        public string message;
+        string message;
     }
 }

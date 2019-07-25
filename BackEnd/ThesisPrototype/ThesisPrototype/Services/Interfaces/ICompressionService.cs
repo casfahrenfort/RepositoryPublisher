@@ -7,6 +7,6 @@ namespace ThesisPrototype.Services.Interfaces
 {
     public interface ICompressionService
     {
-        byte[] ZipBytes(string sourceDirectory, string archiveName);
+        byte[] ZipBytes(string sourceDirectory, string archiveName, string destPath);
     }
 }

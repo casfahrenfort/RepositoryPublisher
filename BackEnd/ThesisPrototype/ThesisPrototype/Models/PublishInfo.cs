@@ -7,5 +7,6 @@
         public string repoURL;
         public string repoName;
         public MetaData metaData;
+        public Snapshot snapshot;
     }
 }

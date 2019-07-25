@@ -40,4 +40,21 @@ button.calendar, button.calendar:active {
     background-repeat: no-repeat;
     background-size: 23px;
     background-position: center;
-  }
+}
+
+.topBar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.topBar > button {
+    margin-left: 10px;
+    float:right;
+}
+
+.nav {
+    padding-bottom: 10px !important;
+}
+
+.spin {
+    margin-left: 12px;
+}
