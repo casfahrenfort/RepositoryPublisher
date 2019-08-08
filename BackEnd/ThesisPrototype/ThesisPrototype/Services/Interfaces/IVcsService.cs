@@ -1,7 +1,5 @@
-﻿using LibGit2Sharp;
-using System.Collections.Generic;
-using System.IO;
-using ThesisPrototype.Models;
+﻿using ThesisPrototype.Models;
+using ThesisPrototype.Models.Repo;
 
 namespace ThesisPrototype.Services.Interfaces
 {
@@ -10,5 +8,7 @@ namespace ThesisPrototype.Services.Interfaces
         Snapshot GetRepositorySnapshot(string url, string repoName, string requestId);
 
         void DeleteRequestDirectory(string requestId);
+
+        RepoTree GetRepositoryTree(string url);
     }
 }

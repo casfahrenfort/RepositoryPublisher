@@ -1,12 +1,13 @@
 ﻿using LibGit2Sharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using ThesisPrototype.Converters;
 using ThesisPrototype.Helpers;
 using ThesisPrototype.Models;
+using ThesisPrototype.Models.Repo;
 using ThesisPrototype.Services.Interfaces;
 
 namespace ThesisPrototype.Services.Implementations
@@ -43,9 +44,41 @@ namespace ThesisPrototype.Services.Implementations
                     zippedBytes = repoBytes
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DeleteRequestDirectory(requestId);
+
+                throw e;
+            }
+        }
+
+        public RepoTree GetRepositoryTree(string url)
+        {
+            // Randomize folder name to avoid collisions
+            string guid = Guid.NewGuid().ToString().Split('-').First();
+            Directory.CreateDirectory($"../Repos/{guid}");
+            string repoPath = $"../Repos/{guid}/repo";
+
+            try
+            {
+                CloneGitRepo(url, repoPath);
+
+                Repository repo = new Repository(repoPath);
+
+                RepoCommit[] repoCommits = repo.Commits.Select(c => c.ToRepoCommit()).ToArray();
+
+                repo.Dispose();
+
+                DeleteRequestDirectory(guid.ToString());
+
+                return new RepoTree()
+                {
+                    commits = repoCommits
+                };
+            }
+            catch(Exception e)
+            {
+                DeleteRequestDirectory(guid);
 
                 throw e;
             }

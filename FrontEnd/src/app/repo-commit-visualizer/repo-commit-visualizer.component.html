@@ -1,0 +1,18 @@
+<span *ngIf="commit.selected" class="directory selected" (click)="expanded = !expanded">
+        <i class="fas fa-hashtag"></i>
+        {{commit.commitId}}
+    </span>
+<span *ngIf="!commit.selected" class="directory" (click)="expanded = !expanded">
+    <i class="fas fa-hashtag"></i>
+    {{commit.commitId}}
+</span>
+<button *ngIf="!commit.selected" class="btn btn-outline-primary btn-sm" (click)="select()">Select</button>
+<ul *ngIf="expanded">
+    <li *ngFor="let dir of commit.directories">
+        <app-repo-directory-visualizer [directory]="dir"></app-repo-directory-visualizer>
+    </li>
+    <li *ngFor="let file of commit.files">
+        <i class="fa fa-file fa-fw"></i> 
+        {{file}}
+    </li>
+</ul>

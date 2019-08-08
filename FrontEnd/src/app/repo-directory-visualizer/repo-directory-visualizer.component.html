@@ -1,0 +1,15 @@
+<span class="directory" (click)="expanded = !expanded">
+    <i *ngIf="!expanded" class="fa fa-folder fa-fw"></i> 
+    <i *ngIf="expanded" class="fa fa-folder-open fa-fw"></i> 
+    {{directory.name}}
+</span>
+
+<ul *ngIf="expanded">
+    <li *ngFor="let dir of directory.directories">
+        <app-repo-directory-visualizer [directory]="dir"></app-repo-directory-visualizer>
+    </li>
+    <li *ngFor="let file of directory.files" class="file">
+        <i class="fa fa-file fa-fw"></i> 
+        {{file}}
+    </li>
+</ul>

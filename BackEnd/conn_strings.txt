@@ -1,0 +1,4 @@
+[Azure]
+mongodb://repopublisherdb:7XnaBgxncO8IfDQ8R1y4PP4AWi9oUw1kyoCBP1WRhapD55l8H7rYmubQKdVtw2dXoLiI30mISH0yw2FoUMW9RA==@repopublisherdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+[Local]
+mongodb://localhost:27017

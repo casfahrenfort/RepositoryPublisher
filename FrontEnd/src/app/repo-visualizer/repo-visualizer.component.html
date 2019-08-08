@@ -1,0 +1,7 @@
+<div class="tree">
+    <ul>
+        <li *ngFor="let commit of repoTree.commits">
+            <app-repo-commit-visualizer [commit]="commit" [parent]="this"></app-repo-commit-visualizer>
+        </li>
+    </ul>
+</div>

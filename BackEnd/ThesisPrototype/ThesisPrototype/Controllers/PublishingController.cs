@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -46,20 +47,21 @@ namespace ThesisPrototype.Controllers
             {
                 snapshot = vcsService.GetRepositorySnapshot(publishInfo.repoURL, publishInfo.repoName, HttpContext.TraceIdentifier.Replace(':', '.'));
             }
-            catch
+            catch (Exception e)
             {
                 return BadRequest(new ErrorResponse()
                 {
-                    message = $"An error occurred while accessing the repository at {publishInfo.repoURL}. Please make sure the repository is publicly accessible."
+                    message =  $"An error occurred while accessing the repository at {publishInfo.repoURL}. Please make sure the repository is publicly accessible."
                 });
             }
 
             Publication duplicate = publicationService.FindDuplicatePublication(snapshot.checksum);
             if (duplicate != null)
             {
-                return BadRequest(new ErrorResponse()
+                return BadRequest(new DuplicatePublicationResponse()
                 {
-                    message = $"This repository has already been published at {duplicate.PublicationUrl}"
+                    message = $"This repository has already been published.",
+                    duplicatePublicationUrl = duplicate.PublicationUrl
                 });
             }
 
@@ -145,9 +147,10 @@ namespace ThesisPrototype.Controllers
 
                 if (duplicateBundle != null)
                 {
-                    return BadRequest(new ErrorResponse()
+                    return BadRequest(new DuplicatePublicationResponse()
                     {
-                        message = $"A similar bundle has already been published at {duplicateBundle.PublicationUrl}"
+                        message = $"A similar bundle has already been published.",
+                        duplicatePublicationUrl = duplicateBundle.PublicationUrl
                     });
                 }
             }

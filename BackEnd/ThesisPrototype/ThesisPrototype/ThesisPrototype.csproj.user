@@ -6,5 +6,6 @@
   <PropertyGroup>
     <ActiveDebugProfile>ThesisPrototype</ActiveDebugProfile>
     <ShowAllFiles>false</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>RepoPublisherBE - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

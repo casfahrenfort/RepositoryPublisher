@@ -7,10 +7,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { PublicationService } from './services/publication.service';
+import { PublishModalComponent } from './publish-modal/publish-modal.component';
+import { PublicationFormComponent } from './publication-form/publication-form.component';
+import { RepoVisualizerComponent } from './repo-visualizer/repo-visualizer.component';
+import { RepoCommitVisualizerComponent } from './repo-commit-visualizer/repo-commit-visualizer.component';
+import { RepoDirectoryVisualizerComponent } from './repo-directory-visualizer/repo-directory-visualizer.component';
+import { RepoVisualizerModalComponent } from './repo-visualizer-modal/repo-visualizer-modal.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PublishModalComponent,
+    PublicationFormComponent,
+    RepoVisualizerComponent,
+    RepoCommitVisualizerComponent,
+    RepoDirectoryVisualizerComponent,
+    RepoVisualizerModalComponent
   ],
   imports: [
     BrowserModule,

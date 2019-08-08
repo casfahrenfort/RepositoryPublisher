@@ -2,8 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using ThesisPrototype.Converters;
 using ThesisPrototype.Helpers;
 using ThesisPrototype.Models;
+using ThesisPrototype.Models.Repo;
 using ThesisPrototype.Services.Interfaces;
 
 namespace ThesisPrototype.Services.Implementations
@@ -52,7 +54,20 @@ namespace ThesisPrototype.Services.Implementations
                 throw e;
             }
         }
+        
+        public RepoTree GetRepositoryTree(string url)
+        {
+            try
+            {
+                string logs = ShellHelper.Bash("svn.exe", $"log {url}");
 
+                return logs.ToRepoTree(url);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         public void DeleteRequestDirectory(string requestId)
         {
