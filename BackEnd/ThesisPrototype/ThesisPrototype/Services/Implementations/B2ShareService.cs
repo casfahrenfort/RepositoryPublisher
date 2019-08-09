@@ -24,7 +24,7 @@ namespace ThesisPrototype.Services.Implementations
             this.configuration = configuration;
         }
 
-        public async Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, PublishInfo bundlePublishInfo)
+        public async Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, List<Publication> duplicates, PublishInfo bundlePublishInfo)
         {
             List<B2SharePublication> publications = new List<B2SharePublication>();
             List<Response> responses = new List<Response>();
@@ -81,7 +81,11 @@ namespace ThesisPrototype.Services.Implementations
             }
 
             B2ShareMetaData bundleB2ShareMetaData = bundlePublishInfo.metaData.ToB2ShareMetaData();
-            bundleB2ShareMetaData.resource_types = publications.Select(p => new B2ShareResourceType() { resource_type = p.publicationUrl, resource_type_general = "Software" }).ToArray();
+            bundleB2ShareMetaData.resource_types = publications
+                .Select(p => new B2ShareResourceType() { resource_type = p.publicationUrl, resource_type_general = "Software" })
+                .Union(duplicates.Select(d => new B2ShareResourceType() { resource_type = d.PublicationUrl, resource_type_general = "Software" }))
+                .ToArray();
+
             HttpResponseMessage bundleResponse = await CreateDraftRecord(bundleB2ShareMetaData);
 
             if (!bundleResponse.IsSuccessStatusCode)

@@ -6,6 +6,7 @@
         public string publishingSystem;
         public string repoURL;
         public string repoName;
+        public string snapshotId;
         public MetaData metaData;
         public Snapshot snapshot;
     }

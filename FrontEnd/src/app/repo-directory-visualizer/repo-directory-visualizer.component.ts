@@ -11,7 +11,7 @@ export class RepoDirectoryVisualizerComponent implements OnInit {
   @Input()
   directory: RepoDirectory;
 
-  private expanded = false;
+  expanded = false;
 
   constructor() { }
 

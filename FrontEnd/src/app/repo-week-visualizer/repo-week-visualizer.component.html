@@ -1,0 +1,9 @@
+<span class="week" (click)="expanded = !expanded">
+    <i class="fas fa-calendar-week"></i>
+    {{week.yearNumber}}, Week {{week.weekNumber}}
+</span>
+<ul *ngIf="expanded">
+    <li *ngFor="let commit of week.commits">
+        <app-repo-commit-visualizer [commit]="commit" [parent]="this"></app-repo-commit-visualizer>
+    </li>
+</ul>

@@ -16,8 +16,6 @@ export class RepoVisualizerModalComponent implements OnInit {
   @Input()
   public repoTree: RepoTree;
 
-  public selectedCommit: RepoCommit;
-
   @Input()
   public parent: PublicationFormComponent;
   
@@ -28,14 +26,6 @@ export class RepoVisualizerModalComponent implements OnInit {
   }
 
   public openModal() {
-    if (this.repoTree) {
-      for(let i = 1; i< this.repoTree.commits.length; i++) {
-        this.repoTree.commits[i].selected = false;
-      }
-
-      this.selectedCommit = this.repoTree.commits[0];
-      this.selectedCommit.selected = true;
-    }
     this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
   }
 
@@ -44,10 +34,6 @@ export class RepoVisualizerModalComponent implements OnInit {
   }
 
   public selectCommit(commit: RepoCommit): void {
-    this.selectedCommit.selected = false;
-    commit.selected = true;
-    this.selectedCommit = commit;
-
     this.parent.selectCommit(commit);
   }
 

@@ -10,6 +10,6 @@ namespace ThesisPrototype.Services.Interfaces
     {
         Task<Response> PublishRepository(byte[] repositoryBytes, string repositoryName, MetaData metaData);
 
-        Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, PublishInfo bundlePublishInfo);
+        Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, List<Publication> duplicates, PublishInfo bundlePublishInfo);
     }
 }

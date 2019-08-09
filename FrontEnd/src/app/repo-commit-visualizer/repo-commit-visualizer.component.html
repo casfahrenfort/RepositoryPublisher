@@ -1,10 +1,10 @@
 <span *ngIf="commit.selected" class="directory selected" (click)="expanded = !expanded">
         <i class="fas fa-hashtag"></i>
-        {{commit.commitId}}
+        {{commit.message}}
     </span>
 <span *ngIf="!commit.selected" class="directory" (click)="expanded = !expanded">
     <i class="fas fa-hashtag"></i>
-    {{commit.commitId}}
+    {{commit.message}}
 </span>
 <button *ngIf="!commit.selected" class="btn btn-outline-primary btn-sm" (click)="select()">Select</button>
 <ul *ngIf="expanded">

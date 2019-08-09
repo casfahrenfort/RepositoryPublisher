@@ -14,9 +14,18 @@
       <button class="btn btn-info" (click)="addRepo()" [disabled]="!canAdd()" placement="bottom" ngbTooltip="Add additional repository to be published as a bundle">Add repository</button>
     </div>
     <ngb-tabset [destroyOnHide]="false">
-      <ngb-tab *ngFor="let form of publishForms; let i = index" title="{{getTabName(form, i)}}">
+      <ngb-tab *ngFor="let form of publishForms; let i = index" title="">
+          <ng-template ngbTabTitle>
+              <span>{{getTabName(form, i)}}</span>
+  
+              <span *ngIf="publishForms.length > 1"
+                  class="close close-tab"
+                  (click)="closeTab(i, $event)">
+                  &times;
+              </span>
+          </ng-template>
         <ng-template ngbTabContent>
-          <app-publication-form [publishForm]="form"></app-publication-form>
+          <app-publication-form [publishForm]="form" [formIndex]="i"></app-publication-form>
         </ng-template>
       </ngb-tab>
     </ngb-tabset>

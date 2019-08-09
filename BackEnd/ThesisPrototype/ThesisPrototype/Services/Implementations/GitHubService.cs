@@ -21,20 +21,47 @@ namespace ThesisPrototype.Services.Implementations
             this.compressionService = compressionService;
         }
 
-        public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName, string requestId)
+        public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName, string snapshotId, string requestId)
         {
             Directory.CreateDirectory($"../Repos/{requestId}");
             string repoPath = $"../Repos/{requestId}/{repoName}";
+            string barePath = $"../Repos/{requestId}/.git";
 
             try
             {
-                CloneGitRepo(gitHubUrl, repoPath);
+                CloneGitRepo(gitHubUrl, barePath);
 
-                DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
+                Repository bareRepo = new Repository(barePath);
+                string md5 = "";
+                byte[] repoBytes;
 
-                string md5 = CreateGitChecksum(repoPath);
+                if(snapshotId == "none")
+                {
+                    md5 = CreateRepoChecksum(bareRepo);
+                    repoBytes = compressionService.ZipBytes(barePath, repoName, $"../Repos/{requestId}");
 
-                byte[] repoBytes = compressionService.ZipBytes(repoPath, repoName, $"../Repos/{requestId}");
+                    bareRepo.Dispose();
+
+                    DirectoryHelper.SetAttributesNormal(new DirectoryInfo(barePath));
+                }
+                else
+                {
+                    Commit commit = bareRepo.Commits.Where(x => x.Sha == snapshotId).First();
+
+                    Repository.Clone(barePath, repoPath);
+                    Repository repo = new Repository(repoPath);
+
+                    CheckoutGitSnapshot(repo, commit);
+                    md5 = CreateSnapshotChecksum(commit);
+
+                    bareRepo.Dispose();
+                    repo.Dispose();
+
+                    DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
+                    Directory.Delete($"{repoPath}/.git", true);
+
+                    repoBytes = compressionService.ZipBytes(repoPath, repoName, $"../Repos/{requestId}");
+                }
 
                 DeleteRequestDirectory(requestId);
 
@@ -71,14 +98,11 @@ namespace ThesisPrototype.Services.Implementations
 
                 DeleteRequestDirectory(guid.ToString());
 
-                return new RepoTree()
-                {
-                    commits = repoCommits
-                };
+                return repoCommits.ToRepoTree();
             }
             catch(Exception e)
             {
-                DeleteRequestDirectory(guid);
+                DeleteRequestDirectory(guid.ToString());
 
                 throw e;
             }
@@ -86,10 +110,12 @@ namespace ThesisPrototype.Services.Implementations
 
         private void CloneGitRepo(string gitHubUrl, string repoPath)
         {
-            if (!Directory.Exists(repoPath))
-            {
-                Repository.Clone(gitHubUrl, repoPath);
-            }
+            Repository.Clone(gitHubUrl, repoPath, new CloneOptions() { IsBare = true });
+        }
+
+        private void CheckoutGitSnapshot(Repository repo, Commit commit)
+        {
+            repo.Checkout(commit.Tree, new string[] { "*" }, new CheckoutOptions() { CheckoutModifiers = CheckoutModifiers.Force });
         }
 
         public void DeleteRequestDirectory(string requestId)
@@ -102,17 +128,25 @@ namespace ThesisPrototype.Services.Implementations
             }
         }
 
-        private string CreateGitChecksum(string repoPath)
+        private string CreateSnapshotChecksum(Commit commit)
+        {
+            MD5 mD5 = MD5.Create();
+            byte[] mD5bytes = mD5.ComputeHash(Encoding.ASCII.GetBytes(commit.Sha));
+
+            string result = BitConverter.ToString(mD5bytes).Replace("-", string.Empty);
+
+            mD5.Dispose();
+
+            return result;
+        }
+
+        private string CreateRepoChecksum(Repository repo)
         {
             string shas = "";
-
-            Repository repo = new Repository(repoPath);
-            foreach (Commit commit in repo.Commits)
+            foreach(Commit commit in repo.Commits)
             {
                 shas += commit.Sha;
             }
-
-            repo.Dispose();
 
             MD5 mD5 = MD5.Create();
             byte[] mD5bytes = mD5.ComputeHash(Encoding.ASCII.GetBytes(shas));

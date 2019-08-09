@@ -47,3 +47,7 @@ ul>li {
     padding:10px 5px 0 5px;
     position:relative
 }
+
+ul>li:last-child::before {
+    height: 25px;
+}

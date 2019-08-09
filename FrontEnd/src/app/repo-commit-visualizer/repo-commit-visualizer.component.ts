@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RepoCommit } from '../models/repo-tree.model';
-import { RepoVisualizerComponent } from '../repo-visualizer/repo-visualizer.component';
+import { RepoWeekVisualizerComponent } from '../repo-week-visualizer/repo-week-visualizer.component';
 
 @Component({
   selector: 'app-repo-commit-visualizer',
@@ -13,7 +13,7 @@ export class RepoCommitVisualizerComponent implements OnInit {
   commit: RepoCommit;
 
   @Input()
-  parent: RepoVisualizerComponent;
+  parent: RepoWeekVisualizerComponent;
 
   expanded = false;
 

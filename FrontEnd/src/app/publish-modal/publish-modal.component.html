@@ -140,15 +140,15 @@
                 It can be found <a href="{{publishResult.publishUrl}}">here</a>.
             </div>
             <div *ngIf="publishResult.error">
-                {{publishResult.error.message}}
+                <p>{{publishResult.error.message}}</p>
                 <div *ngIf="publishResult.error.duplicatePublicationUrl">
                     It can be found <a href="{{publishResult.error.duplicatePublicationUrl}}">here</a>.
                 </div>
-            </div>
-            <div *ngIf="publishResult.error.b2shareResponse">
-                <h6>B2Share Response</h6>
-                message: {{publishResult.error.b2ShareResponse.message}}
-                status: {{publishResult.error.b2ShareResponse.status}}
+                <div *ngIf="publishResult.error.b2ShareResponse">
+                    <h6>B2Share Response</h6>
+                    <p><b>message:</b> {{publishResult.error.b2ShareResponse.message}}</p>
+                    <p><b>status:</b> {{publishResult.error.b2ShareResponse.status}}</p>
+                </div>
             </div>
         </div>
     </div>

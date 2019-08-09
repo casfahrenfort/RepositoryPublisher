@@ -13,6 +13,7 @@ import { RepoVisualizerComponent } from './repo-visualizer/repo-visualizer.compo
 import { RepoCommitVisualizerComponent } from './repo-commit-visualizer/repo-commit-visualizer.component';
 import { RepoDirectoryVisualizerComponent } from './repo-directory-visualizer/repo-directory-visualizer.component';
 import { RepoVisualizerModalComponent } from './repo-visualizer-modal/repo-visualizer-modal.component';
+import { RepoWeekVisualizerComponent } from './repo-week-visualizer/repo-week-visualizer.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RepoVisualizerModalComponent } from './repo-visualizer-modal/repo-visua
     RepoVisualizerComponent,
     RepoCommitVisualizerComponent,
     RepoDirectoryVisualizerComponent,
-    RepoVisualizerModalComponent
+    RepoVisualizerModalComponent,
+    RepoWeekVisualizerComponent
   ],
   imports: [
     BrowserModule,

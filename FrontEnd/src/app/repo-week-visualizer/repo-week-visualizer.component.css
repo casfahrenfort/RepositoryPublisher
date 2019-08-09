@@ -1,9 +1,4 @@
-.selected {
-    border: 1px solid #007bff !important;
-    color: #007bff !important;
-}
-
-.directory {
+.week {
     list-style-type: none;
     margin: 0;
     padding: 10px 5px 0 5px;
@@ -15,10 +10,9 @@
     display: inline-block;
     padding: 3px 8px;
     text-decoration: none;
-    width:500px;
 }
 
-.directory:hover {
+.week:hover {
     cursor:pointer;
     background: #eee;
     border: 1px solid #94a0b4;
@@ -52,11 +46,6 @@ ul>li {
     margin:0;
     padding:10px 5px 0 5px;
     position:relative
-}
-
-button {
-    margin-left: 5px;
-    margin-top: -4px;
 }
 
 ul>li:last-child::before {

@@ -58,6 +58,7 @@ export class PublishModalComponent implements OnInit {
       publishingSystem: publishForm.controls['ps'].value,
       repoName: publishForm.controls['name'].value,
       repoURL: publishForm.controls['url'].value,
+      snapshotId: publishForm.controls['snapshot'].value,
       metaData: {
         author: publishForm.controls['author'].value,
         open_access: publishForm.controls['open_access'].value,
@@ -93,6 +94,7 @@ export class PublishModalComponent implements OnInit {
         publishingSystem: publishForm.controls['ps'].value,
         repoName: publishForm.controls['name'].value,
         repoURL: publishForm.controls['url'].value,
+        snapshotId: publishForm.controls['snapshot'].value,
         metaData: {
           author: publishForm.controls['author'].value,
           open_access: publishForm.controls['open_access'].value,
@@ -112,6 +114,7 @@ export class PublishModalComponent implements OnInit {
       publishingSystem: this.bundleInfo.controls['ps'].value,
       repoName: this.bundleInfo.controls['name'].value,
       repoURL: '',
+      snapshotId: '',
       metaData: {
         author: this.bundleInfo.controls['author'].value,
         open_access: this.bundleInfo.controls['open_access'].value,

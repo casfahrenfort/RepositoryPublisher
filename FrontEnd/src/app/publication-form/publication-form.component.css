@@ -12,3 +12,10 @@ button.calendar, button.calendar:active {
     background-size: 23px;
     background-position: center;
 }
+
+.tooltip-wrapper {
+    min-width: 152.85px;
+    max-width:500px;
+    height: 37.61px;
+    padding-bottom:12px;
+}

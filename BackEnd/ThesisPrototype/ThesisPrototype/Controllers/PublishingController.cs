@@ -45,7 +45,7 @@ namespace ThesisPrototype.Controllers
             Snapshot snapshot;
             try
             {
-                snapshot = vcsService.GetRepositorySnapshot(publishInfo.repoURL, publishInfo.repoName, HttpContext.TraceIdentifier.Replace(':', '.'));
+                snapshot = vcsService.GetRepositorySnapshot(publishInfo.repoURL, publishInfo.repoName, publishInfo.snapshotId, HttpContext.TraceIdentifier.Replace(':', '.'));
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace ThesisPrototype.Controllers
                 Snapshot snapshot;
                 try
                 {
-                    snapshot = vcsService.GetRepositorySnapshot(publishInfos[i].repoURL, publishInfos[i].repoName, HttpContext.TraceIdentifier.Replace(':', '.'));
+                    snapshot = vcsService.GetRepositorySnapshot(publishInfos[i].repoURL, publishInfos[i].repoName, publishInfos[i].snapshotId, HttpContext.TraceIdentifier.Replace(':', '.'));
                 }
                 catch
                 {
@@ -159,7 +159,7 @@ namespace ThesisPrototype.Controllers
 
             IPublishingService publishingService = b2ShareService;
 
-            Response response = await publishingService.PublishMultipleRepositories(publicationsToMake, bundlePublishInfo);
+            Response response = await publishingService.PublishMultipleRepositories(publicationsToMake, duplicates, bundlePublishInfo);
 
             if (response is B2ShareMultiplePublishResponse)
             {

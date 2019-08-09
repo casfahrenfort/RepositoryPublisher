@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <span><span class="font-weight-bold">Selected snapshot:</span> {{selectedCommit.commitId}}</span>
+            <span><span class="font-weight-bold">Selected snapshot:</span> {{parent.selectedCommit.message}}</span>
             <br>
             <br>
             <app-repo-visualizer [repoTree]="repoTree" [parent]="this"></app-repo-visualizer>

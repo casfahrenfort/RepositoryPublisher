@@ -1,7 +1,7 @@
 <div class="tree">
     <ul>
-        <li *ngFor="let commit of repoTree.commits">
-            <app-repo-commit-visualizer [commit]="commit" [parent]="this"></app-repo-commit-visualizer>
+        <li *ngFor="let week of repoTree.repoWeeks">
+            <app-repo-week-visualizer [week]="week" [parent]="this"></app-repo-week-visualizer>
         </li>
     </ul>
 </div>

@@ -7,13 +7,44 @@ namespace ThesisPrototype.Models.Repo
 {
     public class RepoTree
     {
+        public RepoWeek[] repoWeeks;
+
+        public RepoTree()
+        {
+            repoWeeks = new RepoWeek[0];
+        }
+
+        public void AddRepoWeek(RepoWeek week)
+        {
+            repoWeeks = repoWeeks.Append(week).ToArray();
+        }
+    }
+
+    public class RepoWeek
+    {
+        public int weekNumber;
+        public int yearNumber;
         public RepoCommit[] commits;
+
+        public RepoWeek(int weekNumber, int yearNumber)
+        {
+            this.weekNumber = weekNumber;
+            this.yearNumber = yearNumber;
+            commits = new RepoCommit[0];
+        }
+
+        public void AddCommit(RepoCommit commit)
+        {
+            commits = commits.Append(commit).ToArray();
+        }
     }
 
     public class RepoCommit
     {
         public string commitId;
+        public string message;
         public DateTime date;
+        public bool selected = false;
 
         public RepoDirectory[] directories;
         public string[] files;

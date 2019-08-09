@@ -29,19 +29,8 @@ export class AppComponent {
     
     this.titleService.setTitle('Repository Publisher');
 
-    this.publishForms = [this.formBuilder.group({
-      vcs: ['git', Validators.required],
-      ps: ['b2share', Validators.required],
-      url: ['', Validators.required],
-      name: ['', Validators.required],
-      author: ['', Validators.required],
-      contributors: '',
-      version: '',
-      description: ['', Validators.required],
-      open_access: [false, Validators.required],
-      type: ['software', Validators.required],
-      date: ['']
-    })];
+    this.publishForms = [];
+    this.addRepo();
   }
 
   public addRepo() {
@@ -50,13 +39,15 @@ export class AppComponent {
       ps: ['b2share', Validators.required],
       url: ['', Validators.required],
       name: ['', Validators.required],
+      snapshot: ['none', Validators.required],
       author: ['', Validators.required],
       contributors: '',
       version: '',
       description: ['', Validators.required],
       open_access: [true, Validators.required],
-      type: ['', Validators.required],
-      date: ['']
+      type: ['software', Validators.required],
+      date: [''],
+      pubSnap: ['false']
     }));
   }
 
@@ -98,6 +89,15 @@ export class AppComponent {
       return false;
     } else {
       return true;
+    }
+  }
+
+  public closeTab(index: number, event): void {
+    if(this.publishForms.length == 1) {
+      return;
+    } else {
+      this.publishForms.splice(index, 1);
+      event.preventDefault();
     }
   }
 }

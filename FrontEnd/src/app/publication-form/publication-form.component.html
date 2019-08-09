@@ -9,44 +9,35 @@
             <ng-template ngbPanelContent>
                 <h6>Version Control System</h6>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="vcsRadios1" value="git" checked
+                    <input class="form-check-input" type="radio" id="vcsRadios1{{formIndex}}" value="git" checked
                         formControlName="vcs">
-                    <label class="form-check-label" for="vcsRadios1">
+                    <label class="form-check-label" for="vcsRadios1{{formIndex}}">
                         Git
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="vcsRadios2" value="svn" formControlName="vcs">
-                    <label class="form-check-label" for="vcsRadios2">
+                    <input class="form-check-input" type="radio" id="vcsRadios2{{formIndex}}" value="svn"
+                        formControlName="vcs">
+                    <label class="form-check-label" for="vcsRadios2{{formIndex}}">
                         Subversion
                     </label>
                 </div>
                 <br>
                 <div *ngIf="getTabVcs(publishForm)=='git'">
-                    <label for="url">Repository URL <span class="required">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="url" aria-describedby="urlHelp"
-                        placeholder="https://github.com/author/repository" formControlName="url"
-                        (change)="getRepoTree()">
+                    <label for="url{{formIndex}}">Repository URL <span class="required">*</span></label>
+                    <input type="text" class="form-control form-control-sm" id="url{{formIndex}}"
+                        aria-describedby="urlHelp" placeholder="https://github.com/author/repository"
+                        formControlName="url" (change)="getRepoTree()">
                     <small id="urlHelp" class="form-text text-muted">The web URL to your <i>public</i> GitHub
                         repository.</small>
-                    <br>
-
-                    <label for="name">Repository name <span class="required">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="name" placeholder=""
-                        formControlName="name">
                 </div>
 
                 <div *ngIf="getTabVcs(publishForm)=='svn'">
-                    <label for="url">Repository URL <span class="required">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="url" aria-describedby="urlHelp"
-                        placeholder="" formControlName="url" (change)="getRepoTree()">
+                    <label for="url{{formIndex}}">Repository URL <span class="required">*</span></label>
+                    <input type="text" class="form-control form-control-sm" id="url{{formIndex}}"
+                        aria-describedby="urlHelp" placeholder="" formControlName="url" (change)="getRepoTree()">
                     <small id="urlHelp" class="form-text text-muted">The web URL to your <i>public</i> SVN
                         repository.</small>
-                    <br>
-
-                    <label for="name">Repository name <span class="required">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="name" placeholder=""
-                        formControlName="name">
                 </div>
             </ng-template>
         </ngb-panel>
@@ -57,29 +48,42 @@
                 </div>
             </ng-template>
             <ng-template ngbPanelContent>
-                Select the snapshot (also known as <i>commit</i> or <i>revision</i>) you wish to publish.
-                <br>
-                <br>
-                <div *ngIf="!repoTree">
-                    <div *ngIf="!loadingRepoTree && !loadingRepoTreeError">
-                        Enter repository URL to enable snapshot selection
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="snapshotRadios1{{formIndex}}" formControlName="pubSnap" value="false" checked>
+                    <label class="form-check-label" for="snapshotRadios1{{formIndex}}">
+                        Publish entire repository
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="snapshotRadios2{{formIndex}}" formControlName="pubSnap" value="true" (change)="getRepoTree()">
+                    <label class="form-check-label" for="snapshotRadios2{{formIndex}}">
+                        Publish specific snapshot
+                    </label>
+                </div>
+
+                <div *ngIf="publishSnapshot()">
+                    <br>
+                    Select the snapshot (also known as <i>commit</i> or <i>revision</i>) you wish to publish.
+                    <br>
+                    <div *ngIf="selectedCommit">
+                        <span class="font-weight-bold">Selected snapshot:</span> {{selectedCommit.message}}
                     </div>
-                    <div *ngIf="!loadingRepoTree && loadingRepoTreeError">
-                        URL does not point to a public repository
-                    </div>
-                    <div *ngIf="loadingRepoTree">
-                        <div class="spinner-border" style="width: 1.25rem; height: 1.25rem;"
-                            role="status">
-                            <span class="sr-only">Loading...</span>
+                    <br>
+                    <span *ngIf="!repoTree" class="tooltip-wrapper" placement="right" ngbTooltip="{{getToolTip()}}">
+                        <button class="btn btn-info" (click)="modal.openModal()" [disabled]="!repoTree">Select
+                            snapshot</button>
+                        <div *ngIf="loadingRepoTree">
+                            <div class="spinner-border" style="width: 1.25rem; height: 1.25rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Loading repository contents...
                         </div>
-                         Loading repository contents...
-                    </div>
+                    </span>
+                    <span *ngIf="repoTree">
+                        <button class="btn btn-info" (click)="modal.openModal()" [disabled]="!repoTree">Select
+                            snapshot</button>
+                    </span>
                 </div>
-                <div *ngIf="selectedCommit">
-                    <span class="font-weight-bold">Selected snapshot:</span> {{selectedCommit.commitId}}
-                </div>
-                <br>
-                <button class="btn btn-info" (click)="modal.openModal()" [disabled]="!repoTree">Select snapshot</button>
             </ng-template>
         </ngb-panel>
         <ngb-panel id="custom-panel-1">
@@ -91,9 +95,9 @@
             <ng-template ngbPanelContent>
                 <h6>Publishing Environment</h6>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="pidRadios1" value="b2share" checked
+                    <input class="form-check-input" type="radio" id="pidRadios1{{formIndex}}" value="b2share" checked
                         formControlName="ps">
-                    <label class="form-check-label" for="pidRadios1">
+                    <label class="form-check-label" for="pidRadios1{{formIndex}}">
                         EUDAT - B2SHARE
                     </label>
                 </div>
@@ -111,24 +115,30 @@
                 </div>
             </ng-template>
             <ng-template ngbPanelContent>
+
+                <label for="name{{formIndex}}">Publication title <span class="required">*</span></label>
+                <input type="text" class="form-control form-control-sm" id="name{{formIndex}}" placeholder=""
+                    formControlName="name">
+                <br>
                 <h6>Publication type</h6>
                 <div class="form-check check-vertical">
-                    <input class="form-check-input" type="radio" id="typeRadios1" value="software" checked
+                    <input class="form-check-input" type="radio" id="typeRadios1{{formIndex}}" value="software" checked
                         formControlName="type">
-                    <label class="form-check-label" for="typeRadios1">
+                    <label class="form-check-label" for="typeRadios1{{formIndex}}">
                         Software
                     </label>
                 </div>
                 <div class="form-check check-vertical">
-                    <input class="form-check-input" type="radio" id="typeRadios2" value="media" formControlName="type">
-                    <label class="form-check-label" for="typeRadios2">
+                    <input class="form-check-input" type="radio" id="typeRadios2{{formIndex}}" value="media"
+                        formControlName="type">
+                    <label class="form-check-label" for="typeRadios2{{formIndex}}">
                         Media
                     </label>
                 </div>
                 <div class="form-check check-vertical">
-                    <input class="form-check-input" type="radio" id="typeRadios3" value="educational"
+                    <input class="form-check-input" type="radio" id="typeRadios3{{formIndex}}" value="educational"
                         formControlName="type">
-                    <label class="form-check-label" for="typeRadios3">
+                    <label class="form-check-label" for="typeRadios3{{formIndex}}">
                         Educational
                     </label>
                 </div>
@@ -139,7 +149,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="date" ngbDatepicker
-                            #d="ngbDatepicker" id="datepicker" #date>
+                            #d="ngbDatepicker" id="datepicker{{formIndex}}" #date>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
                                 type="button"></button>
@@ -147,31 +157,31 @@
                     </div>
                 </div>
                 <br>
-                <label for="date">Author <span class="required"> *</span></label>
-                <input type="text" class="form-control form-control-sm" id="author" placeholder=""
+                <label for="author{{formIndex}}">Author <span class="required"> *</span></label>
+                <input type="text" class="form-control form-control-sm" id="author{{formIndex}}" placeholder=""
                     formControlName="author">
                 <br>
 
-                <label for="date">Contributors</label>
-                <input type="text" class="form-control form-control-sm" id="contributors" placeholder=""
+                <label for="contributors{{formIndex}}">Contributors</label>
+                <input type="text" class="form-control form-control-sm" id="contributors{{formIndex}}" placeholder=""
                     formControlName="contributors">
                 <br>
 
-                <label for="date">Version</label>
-                <input type="text" class="form-control form-control-sm" id="version" placeholder=""
+                <label for="version{{formIndex}}">Version</label>
+                <input type="text" class="form-control form-control-sm" id="version{{formIndex}}" placeholder=""
                     formControlName="version">
                 <br>
 
-                <label for="date">Description <span class="required">*</span></label>
-                <textarea class="form-control form-control-sm" id="description" placeholder="" rows="5"
+                <label for="description{{formIndex}}">Description <span class="required">*</span></label>
+                <textarea class="form-control form-control-sm" id="description{{formIndex}}" placeholder="" rows="5"
                     formControlName="description"></textarea>
                 <br>
 
                 <h6>Access rights</h6>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="open_access"
+                    <input class="form-check-input" type="checkbox" value="" id="open_access{{formIndex}}"
                         formControlName="open_access">
-                    <label class="form-check-label" for="open_access">
+                    <label class="form-check-label" for="open_access{{formIndex}}">
                         Open access
                     </label>
                 </div>
