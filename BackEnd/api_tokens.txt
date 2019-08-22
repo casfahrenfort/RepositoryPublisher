@@ -1,4 +1,11 @@
+% B2SHARE %
+
 [ThesisPrototype]
 V1mifvQ2s7BI4QTcTVfWSyQZeCYC3GSyXjwiEaLzKPmlTUV1gOa9IMotR7NH
 [TestThesisPrototype]
 GkWs4dgk0DLANOnHs4MkfjEPI2rhGRBcX4zXx6T0xVMiRzrEaMNCo6Ccx8jA
+
+% figshare %
+
+[Test Token]
+b9ff72b9c2a25236c2191301a0a7fad9bc2aacbb70d778bd2d9f9eb4141e07bcb366f5c1fca995d1b83846ff9cd94e8f5b71418753cd80c029edc786252b5113

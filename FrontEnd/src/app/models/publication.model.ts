@@ -6,5 +6,6 @@ export interface Publication {
     repoURL: string;
     repoName: string;
     snapshotId: string;
+    token: string;
     metaData: MetaData;
 }

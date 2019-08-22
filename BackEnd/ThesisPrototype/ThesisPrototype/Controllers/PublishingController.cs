@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using ThesisPrototype.Models;
-using ThesisPrototype.Models.B2Share;
 using ThesisPrototype.Services.Interfaces;
 
 namespace ThesisPrototype.Controllers
@@ -16,16 +13,19 @@ namespace ThesisPrototype.Controllers
     public class PublishingController : ControllerBase
     {
         private readonly IB2ShareService b2ShareService;
+        private readonly IFigshareService figshareService;
         private readonly IGitHubService gitHubService;
         private readonly ISubversionService subversionService;
         private readonly IPublicationService publicationService;
 
         public PublishingController(IB2ShareService b2ShareService,
+            IFigshareService figshareService,
             IGitHubService gitHubService,
             ISubversionService subversionService,
             IPublicationService publicationService)
         {
             this.b2ShareService = b2ShareService;
+            this.figshareService = figshareService;
             this.gitHubService = gitHubService;
             this.subversionService = subversionService;
             this.publicationService = publicationService;
@@ -65,27 +65,25 @@ namespace ThesisPrototype.Controllers
                 });
             }
 
-            IPublishingService publishingService = b2ShareService;
-
-            Response response = await publishingService.PublishRepository(snapshot.zippedBytes, publishInfo.repoName, publishInfo.metaData);
-
-            if (response is B2SharePublishResponse)
+            IPublishingService publishingService;
+            switch (publishInfo.publishingSystem)
             {
-                publicationService.CreatePublication(publishInfo.repoURL, ((B2SharePublishResponse)response).publicationUrl, publishInfo.metaData.open_access, snapshot.checksum);
-
-                return Ok(new PublishResponse
-                {
-                    message = "Repository successfully published.",
-                    publishUrl = ((B2SharePublishResponse)response).publicationUrl
-                });
+                case "b2share": publishingService = b2ShareService; break;
+                case "figshare": publishingService = figshareService; break;
+                default: publishingService = b2ShareService; break;
             }
-            else if (response is B2ShareResponse)
+
+            Response response = await publishingService.PublishRepository(snapshot.zippedBytes, publishInfo);
+
+            if (response is PublishResponse)
             {
-                return BadRequest(new PublishErrorResponse()
-                {
-                    message = "An error occurred while publishing files to B2SHARE. See B2SHARE response for more detail.",
-                    b2ShareResponse = (B2ShareResponse)response
-                });
+                publicationService.CreatePublication(publishInfo.repoURL, ((PublishResponse)response).publishUrl, publishInfo.metaData.open_access, snapshot.checksum);
+                
+                return Ok(response);
+            }
+            else if (response is PublishErrorResponse)
+            {
+                return BadRequest(response);
             }
 
             return BadRequest(new ErrorResponse()
@@ -157,16 +155,22 @@ namespace ThesisPrototype.Controllers
 
             PublishInfo bundlePublishInfo = publishInfos.Last();
 
-            IPublishingService publishingService = b2ShareService;
+            IPublishingService publishingService;
+            switch (bundlePublishInfo.publishingSystem)
+            {
+                case "b2share": publishingService = b2ShareService; break;
+                case "figshare": publishingService = figshareService; break;
+                default: publishingService = b2ShareService; break;
+            }
 
             Response response = await publishingService.PublishMultipleRepositories(publicationsToMake, duplicates, bundlePublishInfo);
 
-            if (response is B2ShareMultiplePublishResponse)
+            if (response is MultiplePublishResponse)
             {
-                B2ShareMultiplePublishResponse publishResponse = (B2ShareMultiplePublishResponse)response;
-                foreach (B2SharePublication b2SharePublication in publishResponse.bundlePublicationInfos)
+                MultiplePublishResponse publishResponse = (MultiplePublishResponse)response;
+                foreach (PublishingSystemPublication pubSystemPublication in publishResponse.bundlePublicationInfos)
                 {
-                    Publication publication = publicationService.CreatePublication(b2SharePublication.publishInfo.repoURL, b2SharePublication.publicationUrl, b2SharePublication.publishInfo.metaData.open_access, b2SharePublication.publishInfo.snapshot.checksum);
+                    Publication publication = publicationService.CreatePublication(pubSystemPublication.publishInfo.repoURL, pubSystemPublication.publicationUrl, pubSystemPublication.publishInfo.metaData.open_access, pubSystemPublication.publishInfo.snapshot.checksum);
                     publicationIds = publicationIds.Append(publication.Id).ToArray();
                     publicationUrls = publicationUrls.Append(publication.PublicationUrl).ToArray();
                 }
@@ -180,37 +184,15 @@ namespace ThesisPrototype.Controllers
                 });
 
             }
-            else if (response is B2ShareResponse)
+            else if (response is PublishErrorResponse)
             {
-                return BadRequest(new PublishErrorResponse()
-                {
-                    message = "An error occurred while publishing files to B2SHARE. See B2SHARE response for more detail.",
-                    b2ShareResponse = (B2ShareResponse)response
-                });
+                return BadRequest(response);
             }
 
             return BadRequest(new ErrorResponse()
             {
                 message = "Unknown error occurred."
             });
-        }
-
-
-        [HttpDelete]
-        public async Task<ActionResult<string>> Delete()
-        {
-            HttpResponseMessage response = await b2ShareService.ListAllRecords();
-
-            string jsonString = await response.Content.ReadAsStringAsync();
-            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
-
-            // Delete every existing draft record
-            foreach (dynamic hit in jsonResponse.hits.hits)
-            {
-                response = await b2ShareService.DeleteDraftRecord((string)hit.id);
-            }
-
-            return "";
         }
     }
 }

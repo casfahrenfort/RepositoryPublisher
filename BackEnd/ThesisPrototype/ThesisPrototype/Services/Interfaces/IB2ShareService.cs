@@ -8,8 +8,8 @@ namespace ThesisPrototype.Services.Interfaces
 {
     public interface IB2ShareService : IPublishingService
     {
-        Task<HttpResponseMessage> ListAllRecords();
+        Task<HttpResponseMessage> ListAllRecords(string token);
 
-        Task<HttpResponseMessage> DeleteDraftRecord(string recordId);
+        Task<HttpResponseMessage> DeleteDraftRecord(string recordId, string token);
     }
 }

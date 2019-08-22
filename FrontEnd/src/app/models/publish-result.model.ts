@@ -2,11 +2,12 @@ export interface PublishResult {
     message: string;
     publishUrl?: string;
     duplicatePublicationUrl?: string;
-    b2shareResponse?: B2ShareResult; 
+    publishingSystemResponse?: PublishingSystemResult; 
     error?: any;
 }
 
-export interface B2ShareResult {
-    status: string;
+export interface PublishingSystemResult {
+    status?: string;
+    code?: string;
     message: string;
 }

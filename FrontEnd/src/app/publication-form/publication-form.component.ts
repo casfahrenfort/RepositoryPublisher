@@ -83,4 +83,20 @@ export class PublicationFormComponent implements OnInit {
     return false;
   }
 
+  public getFullRepoText() {
+    if(this.publishForm.controls['vcs'].value == 'git') {
+      return "Only the contents of the .git folder are published"
+    } else if (this.publishForm.controls['vcs'].value == 'svn') {
+      return "The full contents of the remote repository are published"
+    }
+  }
+
+  public getSnapshotText() {
+    if(this.publishForm.controls['vcs'].value == 'git') {
+      return "Only the files of the selected snapshot are published, excluding the .git folder"
+    } else if (this.publishForm.controls['vcs'].value == 'svn') {
+      return "Only the files in the working copy of the selected snapshot are published, excluding the .svn folder"
+    }
+  }
+
 }

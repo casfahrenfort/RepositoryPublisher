@@ -14,6 +14,13 @@ namespace ThesisPrototype.Models
     public class PublishErrorResponse : Response
     {
         public string message;
-        public B2ShareResponse b2ShareResponse;
+        public Response publishingSystemResponse;
+    }
+
+    public class MultiplePublishResponse : Response
+    {
+        public string message;
+        public string bundlePublicationUrl;
+        public List<PublishingSystemPublication> bundlePublicationInfos;
     }
 }

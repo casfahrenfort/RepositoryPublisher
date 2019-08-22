@@ -44,6 +44,7 @@ namespace ThesisPrototype
             services.AddTransient(typeof (ISubversionService), typeof(SubversionService));
 
             services.AddTransient(typeof (IB2ShareService), typeof(B2ShareService));
+            services.AddTransient(typeof(IFigshareService), typeof(FigshareService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

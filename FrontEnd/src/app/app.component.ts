@@ -37,6 +37,7 @@ export class AppComponent {
     this.publishForms.push(this.formBuilder.group({
       vcs: ['git', Validators.required],
       ps: ['b2share', Validators.required],
+      token: ['', Validators.required],
       url: ['', Validators.required],
       name: ['', Validators.required],
       snapshot: ['none', Validators.required],

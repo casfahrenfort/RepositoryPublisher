@@ -8,7 +8,7 @@ namespace ThesisPrototype.Services.Interfaces
 {
     public interface IPublishingService
     {
-        Task<Response> PublishRepository(byte[] repositoryBytes, string repositoryName, MetaData metaData);
+        Task<Response> PublishRepository(byte[] repositoryBytes, PublishInfo publishInfo);
 
         Task<Response> PublishMultipleRepositories(List<PublishInfo> publishInfos, List<Publication> duplicates, PublishInfo bundlePublishInfo);
     }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ThesisPrototype.Models.B2Share
+namespace ThesisPrototype.Models
 {
-    public class B2SharePublication
+    public class PublishingSystemPublication
     {
-        public string recordId;
+        public string publicationId;
         public string publicationUrl;
         public PublishInfo publishInfo;
     }

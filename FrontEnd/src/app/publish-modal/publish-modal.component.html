@@ -38,17 +38,25 @@
                         <ng-template ngbPanelContent>
                             <h6>Publishing Environment</h6>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" id="bundle_pidRadios1" value="b2share" checked
-                                    formControlName="ps">
+                                <input class="form-check-input" type="radio" id="bundle_pidRadios1" value="b2share"
+                                    checked formControlName="ps">
                                 <label class="form-check-label" for="bundle_pidRadios1">
                                     EUDAT - B2SHARE
                                 </label>
                             </div>
-                            <!--<br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="bundle_pidRadios2" value="figshare"
+                                    checked formControlName="ps">
+                                <label class="form-check-label" for="bundle_pidRadios2">
+                                    figshare
+                                </label>
+                            </div>
+                            <br>
                             <label for="token">Access Token <span class="required">*</span></label>
                             <input type="text" class="form-control form-control-sm" id="bundle_token"
-                                aria-describedby="tokenHelp" placeholder="">
-                            <small id="tokenHelp" class="form-text text-muted">Your B2SHARE access token.</small> -->
+                                aria-describedby="tokenHelp" placeholder="" formControlName="token">
+                            <small id="tokenHelp" class="form-text text-muted">Your B2SHARE/figshare personal access
+                                token</small>
                         </ng-template>
                     </ngb-panel>
                     <ngb-panel id="custom-panel-1">
@@ -60,8 +68,8 @@
                         <ng-template ngbPanelContent>
                             <h6>Publication type</h6>
                             <div class="form-check check-vertical">
-                                <input class="form-check-input" type="radio" id="bundle_typeRadios1" value="software" checked
-                                    formControlName="type">
+                                <input class="form-check-input" type="radio" id="bundle_typeRadios1" value="software"
+                                    checked formControlName="type">
                                 <label class="form-check-label" for="bundle_typeRadios1">
                                     Software
                                 </label>
@@ -101,8 +109,8 @@
                             <br>
 
                             <label for="date">Contributors</label>
-                            <input type="text" class="form-control form-control-sm" id="bundle_contributors" placeholder=""
-                                formControlName="contributors">
+                            <input type="text" class="form-control form-control-sm" id="bundle_contributors"
+                                placeholder="" formControlName="contributors">
                             <br>
 
                             <label for="date">Version</label>
@@ -111,8 +119,8 @@
                             <br>
 
                             <label for="date">Description <span class="required">*</span></label>
-                            <textarea class="form-control form-control-sm" id="bundle_description" placeholder="" rows="5"
-                                formControlName="description"></textarea>
+                            <textarea class="form-control form-control-sm" id="bundle_description" placeholder=""
+                                rows="5" formControlName="description"></textarea>
                             <br>
 
                             <h6>Access rights</h6>
@@ -144,17 +152,23 @@
                 <div *ngIf="publishResult.error.duplicatePublicationUrl">
                     It can be found <a href="{{publishResult.error.duplicatePublicationUrl}}">here</a>.
                 </div>
-                <div *ngIf="publishResult.error.b2ShareResponse">
-                    <h6>B2Share Response</h6>
-                    <p><b>message:</b> {{publishResult.error.b2ShareResponse.message}}</p>
-                    <p><b>status:</b> {{publishResult.error.b2ShareResponse.status}}</p>
+                <div *ngIf="publishResult.error.publishingSystemResponse">
+                    <h6>Publishing System Response</h6>
+                    <p><b>message:</b> {{publishResult.error.publishingSystemResponse.message}}</p>
+                    <span *ngIf="publishResult.error.publishingSystemResponse.status">
+                        <p><b>status:</b> {{publishResult.error.publishingSystemResponse.status}}</p>
+                    </span>
+                    <span *ngIf="publishResult.error.publishingSystemResponse.code">
+                        <p><b>status:</b> {{publishResult.error.publishingSystemResponse.code}}</p>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <span *ngIf="!publishing && !publishResult">
-            <button [disabled]="!bundleInfo.valid" class="btn btn-success" (click)="publishMultipleRepositories()">Publish repositories</button>
+            <button [disabled]="!bundleInfo.valid" class="btn btn-success"
+                (click)="publishMultipleRepositories()">Publish repositories</button>
         </span>
         <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
     </div>

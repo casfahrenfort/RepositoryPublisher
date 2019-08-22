@@ -54,12 +54,16 @@
                         Publish entire repository
                     </label>
                 </div>
+                <span class="font-italic">{{getFullRepoText()}}</span>
+                <br>
+                <br>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="snapshotRadios2{{formIndex}}" formControlName="pubSnap" value="true" (change)="getRepoTree()">
                     <label class="form-check-label" for="snapshotRadios2{{formIndex}}">
                         Publish specific snapshot
                     </label>
                 </div>
+                <span class="font-italic">{{getSnapshotText()}}</span>
 
                 <div *ngIf="publishSnapshot()">
                     <br>
@@ -101,11 +105,18 @@
                         EUDAT - B2SHARE
                     </label>
                 </div>
-                <!--<br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="pidRadios2{{formIndex}}" value="figshare" checked
+                        formControlName="ps">
+                    <label class="form-check-label" for="pidRadios2{{formIndex}}">
+                        figshare
+                    </label>
+                </div>
+                <br>
                 <label for="token">Access Token <span class="required">*</span></label>
-                <input type="text" class="form-control form-control-sm" id="token" aria-describedby="tokenHelp"
-                    placeholder="">
-                <small id="tokenHelp" class="form-text text-muted">Your B2SHARE access token.</small> -->
+                <input type="text" class="form-control form-control-sm" id="token{{formIndex}}" aria-describedby="tokenHelp"
+                    placeholder="" formControlName="token">
+                <small id="tokenHelp" class="form-text text-muted">Your B2SHARE/figshare personal access token</small>
             </ng-template>
         </ngb-panel>
         <ngb-panel id="custom-panel-1">

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ThesisPrototype.Models.B2Share;
+﻿using System.Collections.Generic;
 
 namespace ThesisPrototype.Models
 {
@@ -21,11 +17,5 @@ namespace ThesisPrototype.Models
     public class B2SharePublishResponse : Response
     {
         public string publicationUrl;
-    }
-
-    public class B2ShareMultiplePublishResponse : Response
-    {
-        public string bundlePublicationUrl;
-        public List<B2SharePublication> bundlePublicationInfos;
     }
 }

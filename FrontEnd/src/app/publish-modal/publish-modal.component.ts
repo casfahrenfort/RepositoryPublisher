@@ -30,6 +30,7 @@ export class PublishModalComponent implements OnInit {
     private formBuilder: FormBuilder) {
     this.bundleInfo = this.formBuilder.group({
       ps: ['b2share', Validators.required],
+      token: ['', Validators.required],
       name: ['', Validators.required],
       author: ['', Validators.required],
       contributors: '',
@@ -59,6 +60,7 @@ export class PublishModalComponent implements OnInit {
       repoName: publishForm.controls['name'].value,
       repoURL: publishForm.controls['url'].value,
       snapshotId: publishForm.controls['snapshot'].value,
+      token: publishForm.controls['token'].value,
       metaData: {
         author: publishForm.controls['author'].value,
         open_access: publishForm.controls['open_access'].value,
@@ -95,6 +97,7 @@ export class PublishModalComponent implements OnInit {
         repoName: publishForm.controls['name'].value,
         repoURL: publishForm.controls['url'].value,
         snapshotId: publishForm.controls['snapshot'].value,
+        token: publishForm.controls['token'].value,
         metaData: {
           author: publishForm.controls['author'].value,
           open_access: publishForm.controls['open_access'].value,
@@ -112,6 +115,7 @@ export class PublishModalComponent implements OnInit {
     publications.push({
       versionControl: '',
       publishingSystem: this.bundleInfo.controls['ps'].value,
+      token: this.bundleInfo.controls['token'].value,
       repoName: this.bundleInfo.controls['name'].value,
       repoURL: '',
       snapshotId: '',

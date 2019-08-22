@@ -1,15 +1,13 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ThesisPrototype.Models;
-using ThesisPrototype.Models.B2Share;
 
 namespace ThesisPrototype.Converters
 {
-    public static class ResponseConverter
+    public static class B2ShareResponseConverter
     {
         public static async Task<B2ShareResponse> ToB2ShareResponse(this HttpResponseMessage httpResponseMessage)
         {
@@ -51,20 +49,5 @@ namespace ThesisPrototype.Converters
                 publicationUrl = publicationUrl
             };
         }
-
-        public static async Task<B2ShareMultiplePublishResponse> ToB2ShareMultiplePublishResponse(this HttpResponseMessage httpResponseMessage, List<B2SharePublication> publicationInfos)
-        {
-            string jsonString = await httpResponseMessage.Content.ReadAsStringAsync();
-            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
-
-            string publicationUrl = (string)jsonResponse.links.publication;
-
-            return new B2ShareMultiplePublishResponse()
-            {
-                bundlePublicationUrl = publicationUrl,
-                bundlePublicationInfos = publicationInfos
-            };
-        }
-
     }
 }
