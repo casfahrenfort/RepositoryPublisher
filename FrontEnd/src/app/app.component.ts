@@ -77,11 +77,35 @@ export class AppComponent {
   }
 
   public canPublish(): boolean {
-    for (let i = 0; i < this.publishForms.length; i++) {
-      if (!this.publishForms[i].valid) {
-        return false;
+      if(this.publishForms.length == 1) {
+        if(!this.publishForms[0].valid) {
+          return false;
+        }
+      } else {
+        for (let i = 0; i < this.publishForms.length; i++) {
+
+          if (!this.publishForms[i].valid) {
+    
+            let onlyTokenInvalid = true;
+            let keys = Object.keys(this.publishForms[i].controls);
+            for(let j = 0; j < keys.length; j++) {
+              if (!this.publishForms[i].controls[keys[j]].valid) {
+                if (keys[j] != 'token') {
+                  onlyTokenInvalid = false;
+                }
+              }
+            }
+    
+            if(onlyTokenInvalid) {
+              continue;
+            } else {
+              return false;
+            }
+          }
+
+        }
       }
-    }
+
     return true;
   }
 

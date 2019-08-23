@@ -17,6 +17,9 @@ export class PublicationFormComponent implements OnInit {
   @Input() 
   formIndex: number;
 
+  @Input()
+  totalForms: number;
+
   public repoTree: RepoTree;
   public selectedCommit: RepoCommit;
 

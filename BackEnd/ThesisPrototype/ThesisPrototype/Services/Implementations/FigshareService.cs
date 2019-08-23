@@ -99,6 +99,21 @@ namespace ThesisPrototype.Services.Implementations
                     return await PublishErrorResponse(response);
                 }
 
+                if (!publishInfos[i].metaData.open_access)
+                {
+                    response = await MakeArticleConfidential(articleId, publishInfos[i].token);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        for (int j = 0; j < i; j++)
+                        {
+                            // Delete all drafts to ensure transactional nature of request
+                            await DeleteArticle(int.Parse(publications[j].publicationId), publishInfos[j].token);
+                        }
+                        return await PublishErrorResponse(response);
+                    }
+                }
+
                 publications.Add(new PublishingSystemPublication()
                 {
                     publicationId = articleId.ToString(),
@@ -202,6 +217,17 @@ namespace ThesisPrototype.Services.Implementations
                 return await PublishErrorResponse(response);
             }
 
+            if(!publishInfo.metaData.open_access)
+            {
+                response = await MakeArticleConfidential(articleId, publishInfo.token);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    await DeleteArticle(articleId, publishInfo.token);
+                    return await PublishErrorResponse(response);
+                }
+            }
+
             response = await PublishArticle(articleId, publishInfo.token);
 
             if (!response.IsSuccessStatusCode)
@@ -294,6 +320,17 @@ namespace ThesisPrototype.Services.Implementations
         {
             HttpResponseMessage response = await client.DeleteAsync(
                  $"https://api.figshare.com/v2/account/articles/{articleId}?access_token=" + token);
+
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> MakeArticleConfidential(int articleId, string token)
+        {
+            StringContent content = new StringContent("{\"reason\":\"Marked as not openly accessible\"}", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PutAsync(
+                 $"https://api.figshare.com/v2/account/articles/{articleId}/confidentiality?access_token=" + token,
+                 content);
 
             return response;
         }

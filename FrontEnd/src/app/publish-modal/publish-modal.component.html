@@ -20,7 +20,7 @@
                         <ng-template ngbPanelContent>
                             <h6>Included repositories</h6>
                             <div *ngFor="let form of publishForms">
-                                {{form.controls.name.value}} - {{form.controls.url.value}}
+                                {{form.controls.name.value}} ({{form.controls.url.value}})
                             </div>
                             <br>
                             <label for="name">Bundle name <span class="required">*</span></label>
@@ -37,6 +37,8 @@
                         </ng-template>
                         <ng-template ngbPanelContent>
                             <h6>Publishing Environment</h6>
+                            All repositories will be separately published to this publishing environment, as well as a single record containing references to the published repositories
+                            <br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" id="bundle_pidRadios1" value="b2share"
                                     checked formControlName="ps">
