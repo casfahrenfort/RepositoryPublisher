@@ -159,10 +159,8 @@ namespace ThesisPrototype.Services.Implementations
             // Remove charset of content type to avoid 415 UNSUPPORTED MEDIA TYPE error.
             content.Headers.ContentType.CharSet = "";
 
-            HttpResponseMessage response = await client.PostAsync(
-                "https://trng-b2share.eudat.eu/api/records/?access_token=" + token,
-                content
-            );
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.StatusCode = System.Net.HttpStatusCode.OK;
 
             return response;
         }
@@ -171,9 +169,8 @@ namespace ThesisPrototype.Services.Implementations
         {
             ByteArrayContent content = new ByteArrayContent(file);
 
-            HttpResponseMessage response = await client.PutAsync(
-                "https://trng-b2share.eudat.eu/api/files/" + fileBucketId + "/" + fileName + "?access_token=" + token,
-                content);
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.StatusCode = System.Net.HttpStatusCode.OK;
 
             return response;
         }
@@ -184,10 +181,8 @@ namespace ThesisPrototype.Services.Implementations
             StringContent content = new StringContent(patchMessage, Encoding.UTF8, "application/json-patch+json");
             content.Headers.ContentType.CharSet = "";
 
-            HttpResponseMessage response = await client.PatchAsync(
-                "https://trng-b2share.eudat.eu/api/records/" + recordId + "/draft?access_token=" + token,
-                content
-            );
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.StatusCode = System.Net.HttpStatusCode.OK;
 
             return response;
         }

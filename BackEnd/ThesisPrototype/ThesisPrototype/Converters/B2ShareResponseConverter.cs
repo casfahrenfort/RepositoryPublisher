@@ -23,30 +23,18 @@ namespace ThesisPrototype.Converters
 
         public static async Task<B2ShareDraftResponse> ToB2ShareDraftResponse(this HttpResponseMessage httpResponseMessage)
         {
-            string jsonString = await httpResponseMessage.Content.ReadAsStringAsync();
-            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
-
-            string recordId = jsonResponse.id;
-            string fileBucketId = jsonResponse.links.files;
-            fileBucketId = fileBucketId.Split('/').Last();
-
             return new B2ShareDraftResponse()
             {
-                recordId = recordId,
-                fileBucketId = fileBucketId
+                recordId = "fakeId",
+                fileBucketId = "fakeBucketId"
             };
         }
 
         public static async Task<B2SharePublishResponse> ToB2SharePublishResponse(this HttpResponseMessage httpResponseMessage)
         {
-            string jsonString = await httpResponseMessage.Content.ReadAsStringAsync();
-            dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(jsonString);
-
-            string publicationUrl = (string)jsonResponse.links.publication;
-
             return new B2SharePublishResponse()
             {
-                publicationUrl = publicationUrl
+                publicationUrl = "fakePublicationUrl"
             };
         }
     }
