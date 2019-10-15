@@ -1,10 +1,14 @@
 export interface MetaData {
-    type: string;
-    date: string;
+    title: string;
     author: string;
     contributors: string;
-    version: string;
     description: string;
     open_access: boolean;
-    name: string;
+    type: string;
+    date: string;
+    subject: string;
+    language: string;
+    related: string;
+    license: string;
+    keywords: string;
 }

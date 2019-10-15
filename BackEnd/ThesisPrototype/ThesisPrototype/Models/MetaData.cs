@@ -11,9 +11,13 @@ namespace ThesisPrototype.Models
         public DateTime date;
         public string author;
         public string contributors;
-        public string version;
         public string description;
         public bool open_access;
-        public string name;
+        public string title;
+        public string license;
+        public string keywords;
+        public string related;
+        public string subject;
+        public string language;
     }
 }

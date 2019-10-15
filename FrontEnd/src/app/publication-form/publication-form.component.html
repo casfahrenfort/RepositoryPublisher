@@ -105,21 +105,33 @@
                         <input class="form-check-input" type="radio" id="pidRadios1{{formIndex}}" value="b2share"
                             checked formControlName="ps">
                         <label class="form-check-label" for="pidRadios1{{formIndex}}">
-                            EUDAT - B2SHARE
+                            EUDAT - B2SHARE&nbsp;
                         </label>
                     </div>
+                    <span class="font-italic"><a href="https://eudat.eu/catalogue/B2SHARE">Additional information.</a></span>
+                    <br><br>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" id="pidRadios2{{formIndex}}" value="figshare"
                             checked formControlName="ps">
                         <label class="form-check-label" for="pidRadios2{{formIndex}}">
-                            figshare
+                            figshare&nbsp;
                         </label>
                     </div>
-                    <br>
+                    <span class="font-italic"><a href="https://figshare.com/about">Additional information.</a></span>
+                    <br><br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="pidRadios3{{formIndex}}" value="dataverse"
+                            checked formControlName="ps">
+                        <label class="form-check-label" for="pidRadios3{{formIndex}}">
+                            Harvard Dataverse&nbsp;
+                        </label>
+                    </div>
+                    <span class="font-italic"><a href="https://dataverse.org/">Additional information.</a></span>
+                    <br><br>
                     <label for="token">Access Token <span class="required">*</span></label>
                     <input type="text" class="form-control form-control-sm" id="token{{formIndex}}"
                         aria-describedby="tokenHelp" placeholder="" formControlName="token">
-                    <small id="tokenHelp" class="form-text text-muted">Your B2SHARE/figshare personal access
+                    <small id="tokenHelp" class="form-text text-muted">Your B2SHARE/figshare/Harvard Dataverse personal access
                         token</small>
                 </div>
                 <div *ngIf="totalForms > 1">
@@ -139,7 +151,8 @@
                 <input type="text" class="form-control form-control-sm" id="name{{formIndex}}" placeholder=""
                     formControlName="name">
                 <br>
-                <h6>Publication type</h6>
+
+                Publication type
                 <div class="form-check check-vertical">
                     <input class="form-check-input" type="radio" id="typeRadios1{{formIndex}}" value="software" checked
                         formControlName="type">
@@ -164,11 +177,26 @@
                 <br>
 
                 <h6>Basic information</h6>
-                <label for="date">Publication date <span class="required"> *</span></label>
+                <label for="author{{formIndex}}">Author <span class="required"> *</span></label>
+                <input type="text" class="form-control form-control-sm" id="author{{formIndex}}" placeholder=""
+                    formControlName="author">
+                <br>
+
+                <label for="contributors{{formIndex}}">Contributors <span class="font-italic">(comma seperated)</span></label>
+                <input type="text" class="form-control form-control-sm" id="contributors{{formIndex}}" placeholder=""
+                    formControlName="contributors">
+                <br>
+                
+                <label for="description{{formIndex}}">Description <span class="required">*</span></label>
+                <textarea class="form-control form-control-sm" id="description{{formIndex}}" placeholder="" rows="5"
+                    formControlName="description"></textarea>
+                <br>
+
+                <label for="date">Publication date</label>
                 <div class="form-group">
                     <div class="input-group">
                         <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="date" ngbDatepicker
-                            #d="ngbDatepicker" id="datepicker{{formIndex}}" #date>
+                            #d="ngbDatepicker" id="datepicker{{formIndex}}" formControlName="date" #date>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
                                 type="button"></button>
@@ -176,27 +204,39 @@
                     </div>
                 </div>
                 <br>
-                <label for="author{{formIndex}}">Author <span class="required"> *</span></label>
-                <input type="text" class="form-control form-control-sm" id="author{{formIndex}}" placeholder=""
-                    formControlName="author">
+
+                <h6>Additional information</h6>
+
+                <label for="keywords{{formIndex}}">Keywords <span class="font-italic">(comma seperated)</span></label>
+                <input type="text" class="form-control form-control-sm" id="keywords{{formIndex}}" placeholder=""
+                    formControlName="keywords">
                 <br>
 
-                <label for="contributors{{formIndex}}">Contributors</label>
-                <input type="text" class="form-control form-control-sm" id="contributors{{formIndex}}" placeholder=""
-                    formControlName="contributors">
+                <label for="subject{{formIndex}}">Subject</label>
+                <input type="text" class="form-control form-control-sm" id="subject{{formIndex}}" placeholder=""
+                    formControlName="subject">
                 <br>
 
-                <label for="version{{formIndex}}">Version</label>
-                <input type="text" class="form-control form-control-sm" id="version{{formIndex}}" placeholder=""
-                    formControlName="version">
+                <label for="related{{formIndex}}">Related Identifiers <span class="font-italic">(comma seperated)</span></label>
+                <input type="text" class="form-control form-control-sm" id="related{{formIndex}}" placeholder=""
+                    formControlName="related">
                 <br>
 
-                <label for="description{{formIndex}}">Description <span class="required">*</span></label>
-                <textarea class="form-control form-control-sm" id="description{{formIndex}}" placeholder="" rows="5"
-                    formControlName="description"></textarea>
+                <label for="language{{formIndex}}">Language</label>
+                <select class="form-control form-control-sm" id="language{{formIndex}}" placeholder=""
+                    formControlName="language">
+                    <option value="" selected>Not applicable</option>
+                    <option *ngFor="let lang of languages" value="{{lang}}">{{lang}}</option>
+                </select>
                 <br>
 
                 <h6>Access rights</h6>
+
+                <label for="license{{formIndex}}">License</label>
+                <input type="text" class="form-control form-control-sm" id="license{{formIndex}}" placeholder=""
+                    formControlName="license">
+                <br>
+
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="open_access{{formIndex}}"
                         formControlName="open_access">

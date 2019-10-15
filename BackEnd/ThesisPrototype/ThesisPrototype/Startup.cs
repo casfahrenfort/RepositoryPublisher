@@ -45,6 +45,7 @@ namespace ThesisPrototype
 
             services.AddTransient(typeof (IB2ShareService), typeof(B2ShareService));
             services.AddTransient(typeof(IFigshareService), typeof(FigshareService));
+            services.AddTransient(typeof(IDataverseService), typeof(DataverseService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

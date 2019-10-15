@@ -12,12 +12,13 @@ namespace ThesisPrototype.Converters
         {
             return new B2ShareMetaData()
             {
-                titles = new B2ShareTitle[] { new B2ShareTitle() { title = metaData.name } },
+                titles = new B2ShareTitle[] { new B2ShareTitle() { title = metaData.title } },
                 open_access = metaData.open_access,
-                contributors = new B2ShareContributor[] { new B2ShareContributor() { contributor_name = metaData.contributors, contributor_type = "Producer" } },
+                contributors = metaData.contributors.Split(',').Select(x => 
+                    new B2ShareContributor() { contributor_name = x, contributor_type = "Producer" })
+                    .ToArray(),
                 creators = new B2ShareCreator[] { new B2ShareCreator() { creator_name = metaData.author } },
                 descriptions = new B2ShareDescription[] { new B2ShareDescription() { description = metaData.description, description_type = "Abstract" }  },
-                version = metaData.version,
                 resource_types = new B2ShareResourceType[] { new B2ShareResourceType() { resource_type = metaData.type, resource_type_general = "Software" } }
             };
         }

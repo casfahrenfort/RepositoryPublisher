@@ -17,6 +17,7 @@ namespace ThesisPrototype.Models.Figshare
         public int license;
         //public Dictionary<string, string> custom_fields;
         public string[] references;
+        public FigshareTimeline timeline;
     }
 
     public class FigshareAuthorName
@@ -27,5 +28,10 @@ namespace ThesisPrototype.Models.Figshare
     public class FigshareAuthorId
     {
         public int id;
+    }
+
+    public class FigshareTimeline
+    {
+        public string publisherPublication;
     }
 }

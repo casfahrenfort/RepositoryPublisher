@@ -292,7 +292,7 @@ namespace ThesisPrototype.Services.Implementations
             ByteArrayContent content = new ByteArrayContent(file);
 
             HttpResponseMessage response = await client.PutAsync(
-                upload_url + "/1?access_token=" + configuration["B2SHAREtrngAccessToken"],
+                upload_url + "/1?access_token=" + token,
                 content);
 
             return response;

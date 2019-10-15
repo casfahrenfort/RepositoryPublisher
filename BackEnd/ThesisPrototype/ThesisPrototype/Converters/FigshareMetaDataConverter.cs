@@ -13,7 +13,7 @@ namespace ThesisPrototype.Converters
         {
             return new FigshareMetaData()
             {
-                title = metaData.name,
+                title = metaData.title,
                 is_confidential = !metaData.open_access,
                 description = metaData.description,
                 keywords = new string[] { "hello", "you" },

@@ -1,12 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
-import { PublicationService } from './services/publication.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PublishResult } from './models/publish-result.model';
-import { Publication } from './models/publication.model';
 import { PublishModalComponent } from './publish-modal/publish-modal.component';
 import { Title } from '@angular/platform-browser';
-import { RepoTree } from './models/repo-tree.model';
+import { InformationModalComponent } from './information-modal/information-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +20,9 @@ export class AppComponent {
   @ViewChild('publishModal', { static: true })
   modal: PublishModalComponent;
 
+  @ViewChild('infoModal', { static: true })
+  infoModal: InformationModalComponent;
+
   constructor(private formBuilder: FormBuilder,
     private titleService: Title) {
     
@@ -39,15 +38,19 @@ export class AppComponent {
       ps: ['b2share', Validators.required],
       token: ['', Validators.required],
       url: ['', Validators.required],
-      name: ['', Validators.required],
       snapshot: ['none', Validators.required],
+      name: ['', Validators.required],
       author: ['', Validators.required],
       contributors: '',
-      version: '',
       description: ['', Validators.required],
       open_access: [true, Validators.required],
       type: ['software', Validators.required],
       date: [''],
+      subject: '',
+      language: '',
+      related: '',
+      license: '',
+      keywords: '',
       pubSnap: ['false']
     }));
   }

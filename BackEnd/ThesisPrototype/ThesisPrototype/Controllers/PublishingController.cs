@@ -14,12 +14,14 @@ namespace ThesisPrototype.Controllers
     {
         private readonly IB2ShareService b2ShareService;
         private readonly IFigshareService figshareService;
+        private readonly IDataverseService dataverseService;
         private readonly IGitHubService gitHubService;
         private readonly ISubversionService subversionService;
         private readonly IPublicationService publicationService;
 
         public PublishingController(IB2ShareService b2ShareService,
             IFigshareService figshareService,
+            IDataverseService dataverseService,
             IGitHubService gitHubService,
             ISubversionService subversionService,
             IPublicationService publicationService)
@@ -29,6 +31,7 @@ namespace ThesisPrototype.Controllers
             this.gitHubService = gitHubService;
             this.subversionService = subversionService;
             this.publicationService = publicationService;
+            this.dataverseService = dataverseService;
         }
 
         [HttpPost]
@@ -70,6 +73,7 @@ namespace ThesisPrototype.Controllers
             {
                 case "b2share": publishingService = b2ShareService; break;
                 case "figshare": publishingService = figshareService; break;
+                case "dataverse": publishingService = dataverseService; break;
                 default: publishingService = b2ShareService; break;
             }
 
@@ -160,6 +164,7 @@ namespace ThesisPrototype.Controllers
             {
                 case "b2share": publishingService = b2ShareService; break;
                 case "figshare": publishingService = figshareService; break;
+                case "dataverse": publishingService = dataverseService; break;
                 default: publishingService = b2ShareService; break;
             }
 

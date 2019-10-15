@@ -1,0 +1,24 @@
+<ng-template #content let-modal class="modal-lg">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Additional information</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h6>Explanation</h6>
+        <p>
+            This tool can be used to publish version control system repository snapshots to external digital object publishing systems. The data will be <span class="font-italic">persistently</span> published, meaning that a unique identifier will be assigned to it, which will be permanently resolvable through the issuing publishing system. A digital object can contain any amount or type of data, and is accompanied by metadata to clarify what data it is and to enable enhanced human and machine interaction with the data. After publishing, the identifier can be used to cite the data in your research. 
+        </p>
+        <p>
+            For more information on digital objects, see <a href="https://www.doi.org/hb.html">the DOI handbook</a>.
+        </p>
+        <h6>Requirements</h6>
+        <p>
+            To publish a repository, make sure it is <span class="font-italic">publicly</span> available through a URL. When choosing a publishing system, make sure you have an account with an API access token with that particular publisher. When publishing multiple snapshots at once, they will each be published separately to the publishing system and a final publication will be made which references the snapshot publications. This final publication can be used for citations which depend on all submitted snapshots.
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
