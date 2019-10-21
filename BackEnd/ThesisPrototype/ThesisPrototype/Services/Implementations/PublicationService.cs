@@ -18,14 +18,16 @@ namespace ThesisPrototype.Services.Implementations
             var client = new MongoClient(dbSettings.ConnectionString);
             var database = client.GetDatabase(dbSettings.DatabaseName);
 
-            publications = database.GetCollection<Publication>(dbSettings.PublicationCollectionName);
-            publicationBundles = database.GetCollection<PublicationBundle>(dbSettings.PublicationBundleCollectionName);
+            //publications = database.GetCollection<Publication>(dbSettings.PublicationCollectionName);
+            //publicationBundles = database.GetCollection<PublicationBundle>(dbSettings.PublicationBundleCollectionName);
         }
 
         public Publication FindDuplicatePublication(string checksum)
         {
-            List<Publication> pubs = publications.Find<Publication>(p => p.Checksum == checksum).ToList();
-            
+            //List<Publication> pubs = publications.Find<Publication>(p => p.Checksum == checksum).ToList();
+
+            List<Publication> pubs = new List<Publication>();
+
             if (pubs.Count == 0)
             {
                 return null;
@@ -46,9 +48,9 @@ namespace ThesisPrototype.Services.Implementations
 
         public PublicationBundle FindDuplicatePublicationBundle(List<Publication> publications)
         {
-            List<PublicationBundle> pubs = publicationBundles.Find<PublicationBundle>(p => true).ToList();
+            //List<PublicationBundle> pubs = publicationBundles.Find<PublicationBundle>(p => true).ToList();
 
-            pubs = pubs.FindAll(p => IsDuplicateBundle(p, publications));
+            List<PublicationBundle> pubs = new List<PublicationBundle>();// pubs.FindAll(p => IsDuplicateBundle(p, publications));
 
 
             if (pubs.Count == 0)
@@ -73,10 +75,10 @@ namespace ThesisPrototype.Services.Implementations
         {
             foreach (Publication pub in publications)
             {
-                if (!bundle.PublicationIds.Contains(pub.Id))
-                {
+                //if (!bundle.PublicationIds.Contains(pub.Id))
+                //{
                     return false;
-                }
+                //}
             }
 
             return true;
@@ -92,7 +94,7 @@ namespace ThesisPrototype.Services.Implementations
                 SourceUrl = sourceUrl
             };
 
-            publications.InsertOne(publication);
+            //publications.InsertOne(publication);
 
             return publication;
         }
@@ -107,7 +109,7 @@ namespace ThesisPrototype.Services.Implementations
                 Open_Access = open_access
             };
 
-            publicationBundles.InsertOne(publicationBundle);
+            //publicationBundles.InsertOne(publicationBundle);
 
             return publicationBundle;
         }
