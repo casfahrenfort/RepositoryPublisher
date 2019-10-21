@@ -107,7 +107,27 @@ namespace ThesisPrototype.Services.Implementations
                 return await PublishErrorResponse(bundleResponse);
             }
 
-            return await bundleResponse.ToMultiplePublishResponse(publications);
+            return new MultiplePublishResponse()
+            {
+                bundlePublicationUrl = "fakePublicationUrl",
+                bundlePublicationInfos = new List<PublishingSystemPublication> {
+                    new PublishingSystemPublication() {
+                        publicationId = "fakeId",
+                        publicationUrl = "fakeUrl",
+                        publishInfo = new PublishInfo() {
+                            repoName = "fakeName",
+                            repoURL = "fakeUrl",
+                            snapshot = new Snapshot()
+                            {
+                                checksum = "fakeChecksum"
+                            },
+                            metaData = new MetaData()
+                            {
+                                open_access = false
+                            }
+                        }
+                } }
+            };
         }
 
         public async Task<Response> PublishRepository(byte[] repoBytes, PublishInfo publishInfo)

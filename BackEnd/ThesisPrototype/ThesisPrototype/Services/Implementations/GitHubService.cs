@@ -24,29 +24,35 @@ namespace ThesisPrototype.Services.Implementations
         public Snapshot GetRepositorySnapshot(string gitHubUrl, string repoName, string snapshotId, string requestId)
         {
             Directory.CreateDirectory($"../Repos/{requestId}");
+            Directory.CreateDirectory($"../Repos/{requestId}/Files");
+
+
             string repoPath = $"../Repos/{requestId}/{repoName}";
-            string barePath = $"../Repos/{requestId}/.git";
+            string barePath = $"../Repos/{requestId}/Files";
+
+
+            DirectoryHelper.SetAttributesNormal(new DirectoryInfo(barePath));
+            FileStream fs = new FileStream(barePath + "/dummyRepo", FileMode.CreateNew);
+            //fs.Seek(524288000, SeekOrigin.Begin);
+            fs.Seek(1, SeekOrigin.Begin);
+            fs.WriteByte(0);
+            fs.Close();
 
             try
             {
-                CloneGitRepo(gitHubUrl, barePath);
+                //CloneGitRepo(gitHubUrl, barePath);
 
-                Repository bareRepo = new Repository(barePath);
-                string md5 = "";
+                //Repository bareRepo = new Repository(barePath);
+                string md5 = Guid.NewGuid().ToString();
                 byte[] repoBytes;
 
                 if(snapshotId == "none")
                 {
-                    md5 = CreateRepoChecksum(bareRepo);
                     repoBytes = compressionService.ZipBytes(barePath, repoName, $"../Repos/{requestId}");
-
-                    bareRepo.Dispose();
-
-                    DirectoryHelper.SetAttributesNormal(new DirectoryInfo(barePath));
                 }
                 else
                 {
-                    Commit commit = bareRepo.Commits.Where(x => x.Sha == snapshotId).First();
+                    /*Commit commit = bareRepo.Commits.Where(x => x.Sha == snapshotId).First();
 
                     Repository.Clone(barePath, repoPath);
                     Repository repo = new Repository(repoPath);
@@ -58,9 +64,9 @@ namespace ThesisPrototype.Services.Implementations
                     repo.Dispose();
 
                     DirectoryHelper.SetAttributesNormal(new DirectoryInfo(repoPath));
-                    Directory.Delete($"{repoPath}/.git", true);
+                    Directory.Delete($"{repoPath}/.git", true);*/
 
-                    repoBytes = compressionService.ZipBytes(repoPath, repoName, $"../Repos/{requestId}");
+                    repoBytes = compressionService.ZipBytes(barePath, repoName, $"../Repos/{requestId}");
                 }
 
                 DeleteRequestDirectory(requestId);

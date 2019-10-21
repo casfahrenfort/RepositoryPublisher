@@ -54,7 +54,7 @@ namespace ThesisPrototype.Controllers
             {
                 return BadRequest(new ErrorResponse()
                 {
-                    message =  $"An error occurred while accessing the repository at {publishInfo.repoURL}. Please make sure the repository is publicly accessible."
+                    message = e.Message// $"An error occurred while accessing the repository at {publishInfo.repoURL}. Please make sure the repository is publicly accessible."
                 });
             }
 
@@ -120,11 +120,11 @@ namespace ThesisPrototype.Controllers
                 {
                     snapshot = vcsService.GetRepositorySnapshot(publishInfos[i].repoURL, publishInfos[i].repoName, publishInfos[i].snapshotId, HttpContext.TraceIdentifier.Replace(':', '.'));
                 }
-                catch
+                catch(Exception e)
                 {
                     return BadRequest(new ErrorResponse()
                     {
-                        message = $"An error occurred while accessing the repository at {publishInfos[i].repoURL}. Please make sure the repository is publicly accessible."
+                        message = e.Message // $"An error occurred while accessing the repository at {publishInfos[i].repoURL}. Please make sure the repository is publicly accessible."
                     });
                 }
 
